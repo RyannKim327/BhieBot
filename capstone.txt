@@ -1,0 +1,119 @@
+BS-IT) Bachelor of Science in Information Technology
+More options
+THESIS TOPICS TITLE,CAPSTONE PROJECT:
+
+1. Airline Reservation System
+2. Android – Controlled Car
+3. Android Joystick Application using Bluetooth
+4. Android-Based Class Attendance Monitoring Application using Barcode
+5. Bluetooth Controlled Robot using Android Mobile (CoE/CPE/IT/CS)
+6. Book Catalog Application using Android
+7. Camera-Based Heart Rate Detector using Android
+8. Cemetery Mapping and Information System
+9. Centralized Medical System using Different Sensor for Vital signs Detector
+10. Class Time Table in Android
+11. Client-server based guidance system
+12. Computer-Aided Instruction with Voice Recognition system
+13. E-Learning System
+14. E-commerce website multi vendor
+15. Electronic Police Clearance System
+16. E-voting system
+17. E-Voting System with SMS technology
+18. Face Recognition System
+19. Fish Counting System
+20. Geographic Information System with Flood-Prone Location
+21. Grade Viewer Application in Android
+22 Group Messenger Application using Android
+23. Holistic Computerized Faculty Evaluation System
+24. Home Appliances controlled by Android Smartphone
+25. Hospital system
+26. Hotel management system
+27. Hotel Reservation Application with Mobile Compatibility in Android
+28. Hotel reservation system
+29. Human Resource Management System
+30. Intelligent Traveler Locator using Google Map Application
+31. Internet Cafe System
+32. Judging System
+33. Lending Management system
+34. Library system
+35. Medical records system
+36. Medicine Inventory and Patient Information system
+37. Mobile Educational Application for Elementary Student using Android
+38. Mobile Health Tips using Android
+39. Mobile Pharmacy Application in Android
+40. Mobile Point-Of-Sale Application with SMS Notification
+41. Mobile Reservation for Banquet Halls
+42. Mobile Voting System using Android
+43. Motorcycle Tracking with GPS using Android
+44. On Route Travel Assistant for Public Transport Based on Android Technology
+45. Online bidding system
+46. An online class scheduling system
+47. Online courseware
+48. Online Grade Inquiry
+49. Online Grading System
+50. The online hotel reservation system
+51. Online inventory system
+52. Online Lot Reservation
+53. Online management system
+54. Online membership and billing system
+55. Online payroll system
+56. Online POS(Point of Sale)
+57. Online Product Reservation System
+58. Online public access catalog
+59. Online shopping cart
+60. Online voting system
+61. Order Billing Inventory System
+62. Payroll system
+63. Payroll System with Biometric and Barcode Technology
+64. Pharmacy Automation System
+65. Touch-Screen Based Point-Of-Sale System (POS)
+66. Pharmacy Management System
+67. Quiz Application using Android
+68. Record management system
+69. Resort Management System
+70. RFID-Based Student Monitoring System
+71. Sales and Inventory Monitoring System with SMS
+72. Salon System
+73. School Event Attendance Monitoring System with Biometric and Barcode Technology
+74. SMS-Based Grade Inquiry System
+75. SSG Management System with SMS Notification
+76. Supply inventory system
+77. Supply inventory system
+78. Veterinary Clinic and Pet Shop Management System
+79. Video Library Management System
+80. Video Rental Application in Android
+81. Voting system
+82. Weather Forecast Application using Android
+83. Web-Based Tracking System
+84. Mobile Based Year Book Gallery App (Android and IOS)
+85. Mobile Loan Management and Inquiry Application
+86. LAN/Web Based Sales and Inventory with Decision Support System
+87. Web Application for Real Estate Record Management
+88. Android Based Doorbell Notification App with SMS Support
+89. Web and Mobile Based Faculty Evaluation System (Web for Admin and Mobile for Rating of Students)
+90. GPS based Vehicle theft detection system using GSM technology
+91. Hospital ERP System with Decision Support System: A Data Warehouse of Patient Information
+92. DTR, Payroll System with Android and SMS Notification for Employees
+93. Home Automation and Surveillance with the help of ip camera and wifi module shield
+94. ClassDroid: Web and Mobile Class Record Application
+95. Android/SMS Based Controlled Electronic Bulletin Board
+96. Nursing Education with the use of healthcare software
+97. Information Kiosk for School Campus
+98. RFid Based Security System with GSM technology
+99. Coin Operated Loading Machine Kiosk
+100. Converting Filipino Sign Language to Text using Microsoft Kinect Sensor
+101. EventScore: Web and Mobile Event Evaluation Application
+102. GSM based digital Notice board with display on PC Monitor
+103. Android Based Weather Forecast Application using OpenWeatherMap API
+104. Baha Watcher: Android Based Water Level Indicator Using Arduino with SMS Notification
+105. Air Quality Tester Application for Android (using Arduino)
+106. ItemFinder: Lost and Found Monitoring and Management System (Web and Android Application)
+107. Coin Operated Printing Kiosk
+108. Nursing education and training on management and use of healthcare software
+109. RFID Based Bus Fare Payment System
+110. Document Tagging Application with Android QR Scanner
+111. MemoDroid: Web and Mobile Memo Notification App
+112. Online Complaint Management System
+113. Online Grading and Attendance Monitoring System with SMS Notification
+114. AdviseMobile: A Web and Mobile Based Guidance Consultation System
+115. Guidance Office Centralized Information Database System

@@ -1,0 +1,30 @@
+Hello, I am BhieBot, your virtual friend from non existed world. By the way, here's the command you may use on me:
+
+Bhie Bot Commands List
+
+Prefix: √ (square root)
+
+√info | This command shows information about Bhie Bot. It's also shows about the commands and the use of the bot
+√music <ytlink> or <music name> | This command plays music from Youtube Music.
+√verse | Giving you a random bible verse.
+√verse of the day | Giving you a bible verse for that day
+√verse <chapter and verse> | For a specific bible verse, use - for range and ; for multiple verses. (Format: John 3:16-17; Jude 1:3)
+√whatis <word> | Giving a definition and audio if possible.
+√motivate | This command sends random motivational quotes.
+√special | This command sends a surprise, yes, it is a surprise!
+√bang bang | This command sends a funny gifs.
+
+
+There's also a greeting once you've greet to me or to someone else.
+
+The development is still on progress. Thank you for using me.
+
+
+Credits:
+Salvador
+John Jeremy Antiguo
+John Roy Lapida Calimlim
+Earl Shine Sawir
+John Paul Caigas
+
+Truly Yours: BhieBot
