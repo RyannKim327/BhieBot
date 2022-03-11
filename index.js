@@ -167,7 +167,11 @@ async function speech(x){
 			audioEncoding: 'MP3'
 		}
 	}
-	const o = await client.synthesizeSpeech(r)
+	const o = await client.synthesizeSpeech(r).then((r) => {
+		return r.data
+	}).catch((e) => {
+		return e
+	})
 	console.log(o)
 	return o
 }
