@@ -989,7 +989,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 				if(event.body != undefined){
 					let m = event.body
 					let x = m.toLowerCase() 
-					if(!selves.includes(event.senderID) && (x.includes("thank") || x.includes("tnx"))){
+					if(!selves.includes(event.senderID) && selves.includes(event.messageReply.senderID) && (x.includes("thank") || x.includes("tnx"))){
 						api.setMessageReaction("😻", event.messageID, (err) => {}, true)
 						api.getUserInfo(event.senderID, (err, data) => {
 							console.log(api.mention)
