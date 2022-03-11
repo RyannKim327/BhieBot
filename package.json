@@ -11,6 +11,6 @@
     "https": "^1.0.0",
     "request": "^2.88.2",
     "youtube-music-api": "^1.0.6",
-    "ytdl-core": "^4.10.1"
+    "ytdl-core": "^4.11.0"
   }
 }
