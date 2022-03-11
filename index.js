@@ -983,7 +983,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 												tag: `@${name.firstName}`,
 												id: event.senderID
 											}],
-											attachment: fs.createReadSync(__dirname + "/goodnight.gif")
+											attachment: fs.createReadStream(__dirname + "/goodnight.gif")
 										}, event.threadID, event.messageID)
 									}
 								})
