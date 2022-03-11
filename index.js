@@ -217,7 +217,7 @@ async function words(x){
 			return r.data
 		}).catch((e) => {
 			return e
-		}
+		})
 		console.log(a)
 	}
 }
