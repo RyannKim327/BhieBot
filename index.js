@@ -209,7 +209,18 @@ function f(p) {
 function read(){
 	return fs.readFileSync("thread.txt", "utf-8")
 }
-
+async function words(x){
+	let y = x.replace(/[^\w\s]/gi, '')
+	let z = y.split(" ")
+	for(let c : z){
+		let a = await axios.get("http://bhiebot.xp3.biz/bot.php?action=words&data=" + c).then((r) => {
+			return r.data
+		}).catch((e) => {
+			return e
+		}
+		console.log(a)
+	}
+}
 login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 	if(err)  return console.error(err)
 	if(bhiebot){
@@ -225,6 +236,9 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 	var listenEmitter = api.listen(async (err, event) => {
 		if(err) return console.error(err)
 		api.markAsRead(event.threadID)
+		if(event.body != undefined){
+			words(event.body)
+		}
 		switch(event.type){
 			case "message":
 				if(event.body != null){
