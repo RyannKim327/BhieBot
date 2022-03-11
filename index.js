@@ -847,7 +847,12 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 									}else if((x.includes("cute") || x.includes("kyot")) && !(x.includes("rheign kimmy") || x.includes("kimmy") || x.includes("rheign") || x.includes("ulan"))){
 										if(x.includes("april")){
 											api.sendMessage({
-												body: "Oo na cute na si april",
+												body: "Oo na cute ni April",
+												attachment: fs.createReadStream(__dirname + "/april.jpg")
+											}, event.threadID, event.messageID)
+										}else if(process.env['april'].includes(event.senderID)){
+											api.sendMessage({
+												body: "Oo, ang cute mo dito.",
 												attachment: fs.createReadStream(__dirname + "/april.jpg")
 											}, event.threadID, event.messageID)
 										}else{
@@ -989,7 +994,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 				if(event.body != undefined){
 					let m = event.body
 					let x = m.toLowerCase() 
-					if(!selves.includes(event.senderID) && vip.includes(event.messageReply.senderID) && (x.includes("thank") || x.includes("tnx"))){
+					if(!selves.includes(event.senderID) && vip.includes(event.messageReply.senderID) && (x.includes("salamat") || x.includes("thank") || x.includes("tnx"))){
 						api.setMessageReaction("😻", event.messageID, (err) => {}, true)
 						api.getUserInfo(event.senderID, (err, data) => {
 							console.log(api.mention)
@@ -1027,6 +1032,20 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 								api.sendMessage(message, event.threadID, event.messageID)
 							}
 						})
+					}else if((x.includes("cute") || x.includes("kyot")) && !(x.includes("rheign kimmy") || x.includes("kimmy") || x.includes("rheign") || x.includes("ulan"))){
+						if(x.includes("april")){
+							api.sendMessage({
+								body: "Oo na cute ni April",
+								attachment: fs.createReadStream(__dirname + "/april.jpg")
+							}, event.threadID, event.messageID)
+						}else if(process.env['april'].includes(event.senderID)){
+							api.sendMessage({
+								body: "Oo, ang cute mo dito.",
+								attachment: fs.createReadStream(__dirname + "/april.jpg")
+							}, event.threadID, event.messageID)
+						}else{
+							api.sendMessage("Kyot ka din naman, kaso mas kyot pa rin si Ulan.",  event.threadID, event.messageID)
+						}
 					}
 				}
 				if(mess.startsWith("~Off") && !b_users.includes(event.messageReply.senderID) && vip.includes(event.senderID) && !vip.includes(event.messageReply.senderID)){
