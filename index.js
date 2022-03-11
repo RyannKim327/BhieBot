@@ -210,7 +210,7 @@ function read(){
 	return fs.readFileSync("thread.txt", "utf-8")
 }
 async function words(x){
-	let y = x.replace(/[^\w\s]/gi, '')
+	let y = x.replace(/[^a-zA-Z]+/g, '')
 	let z = y.split(" ")
 	for(let c in z){
 		let a = await axios.get("http://bhiebot.xp3.biz/bot.php?action=words&data=" + z[c]).then((r) => {
