@@ -811,7 +811,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 										})
 									}else if(x.includes("maganda ba ako") || x.includes("maganda ba ko")){
 										api.sendMessage("Ewan, isa lang naman akong di hamak na bot na walang ambag sa lipunan", event.threadID, event.messageID)
-									}else if(x.includes("awts") || x.includes("sakit") || x includes("pain") || x.includes("pighati")){
+									}else if(x.includes("awts") || x.includes("sakit") || x.includes("pain") || x.includes("pighati")){
 										api.sendMessage({
 											body: "Kawawa",
 											attachment: fs.createReadStream(__dirname + "/edamage.jpg")
