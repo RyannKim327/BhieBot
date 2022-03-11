@@ -785,39 +785,46 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 										})
 									}
 								}
-								if(!selves.includes(event.senderID) && x.includes("welcome") && (x.includesx.includes("bhiebot") || x.includes("bhie"))){
-									api.setMessageReaction("😍", event.messageID, (err) => {}, true)
-									api.getUserInfo(event.senderID, (err, data) => {
-										if(err){
-											console.log(err)
-										}else{
-											api.sendMessage("Salamat master " + data[event.senderID]['firstName'], event.threadID, event.messageID)
+								if(!selver.includes(event.senderID)){
+									if(x.includes("welcome") && (x.includes("bhiebot") || x.includes("bhie"))){
+										api.setMessageReaction("😍", event.messageID, (err) => {}, true)
+										api.getUserInfo(event.senderID, (err, data) => {
+											if(err){
+												console.log(err)
+											}else{
+												api.sendMessage("Salamat master " + data[event.senderID]['firstName'], event.threadID, event.messageID)
+											}
+										})
+									}else if((x.includes("suggest") || x.includes("suggestion") || x.includes("recommend"))){
+										if((x.includes("capstone") || x.includes("thesis") || x.includes("research")) && (x.includes("title"))){
+											api.sendMessage(fs.readFileSync("capstone.txt", "utf-8"), event.threadID, event.messageID)
 										}
-									})
-								}else if(!selves.includes(event.senderID) && (x.includes("suggest") || x.includes("suggestion") || x.includes("recommend"))){
-									if((x.includes("capstone") || x.includes("thesis") || x.includes("research")) && (x.includes("title"))){
-										api.sendMessage(fs.readFileSync("capstone.txt", "utf-8"), event.threadID, event.messageID)
-									}
-								}else if(!selves.includes(event.senderID) && (x.includes("mahal kita") || x.includes("love you") || x.includes("i love")) && (x.includes("bot") || x.includes("bhiebot") || x.includes("bhie bot"))){
-									api.setMessageReaction("🤣", event.messageID, (err) => {}, true)
-									api.getUserInfo(event.senderID, (err, data) => {
-										api.sendMessage("Luhh, nainlove sa bot hahaha", event.threadID, event.messageID)
-									})
-								}else if(!selves.includes(event.senderID) && x.includes("ito pala")){
-									api.setMessageReaction("🤣", event.messageID, (err) => {}, true)
-									api.getUserInfo(event.senderID, (err, data) => {
-										api.sendMessage("Lutang ka ata hahaha", event.threadID, event.messageID)
-									})
-								}else if(!selves.includes(event.senderID) && x.includes("maganda ba ako") || x.includes("maganda ba ko")){
-									api.sendMessage("Ewan, isa lang naman akong di hamak na bot na walang ambag sa lipunan", event.threadID, event.messageID)
-								}else if(!selves.includes(event.senderID) && (x.includes("cute") || x.includes("kyot")) && !(x.includes("rheign kimmy") || x.includes("kimmy") || x.includes("rheign") || x.includes("ulan"))){
-									if(x.includes("april")){
+									}else if( (x.includes("mahal kita") || x.includes("love you") || x.includes("i love")) && (x.includes("bot") || x.includes("bhiebot") || x.includes("bhie bot"))){
+										api.setMessageReaction("🤣", event.messageID, (err) => {}, true)
+										api.getUserInfo(event.senderID, (err, data) => {
+											api.sendMessage("Luhh, nainlove sa bot hahaha", event.threadID, event.messageID)
+										})
+									}else if(x.includes("ito pala")){
+										api.setMessageReaction("🤣", event.messageID, (err) => {}, true)
+										api.getUserInfo(event.senderID, (err, data) => {
+											api.sendMessage("Lutang ka ata hahaha", event.threadID, event.messageID)
+										})
+									}else if(x.includes("maganda ba ako") || x.includes("maganda ba ko")){
+										api.sendMessage("Ewan, isa lang naman akong di hamak na bot na walang ambag sa lipunan", event.threadID, event.messageID)
+									}else if(x.includes("awts") || x.includes("sakit") || x includes("pain") || x.includes("pighati")){
 										api.sendMessage({
-											body: "Oo na cute na si april",
-											attachment: fs.createReadStream(__dirname + "/april.jpg")
-										}, event.threadID, event.messageID)
-									}else{
-										api.sendMessage("Kyot ka din naman, kaso mas kyot pa rin si Ulan.",  event.threadID, event.messageID)
+											body: "Kawawa",
+											attachment: fs.createReadStream(__dirname + "/edamage.jpg")
+										}, event.threadID)
+									}else if((x.includes("cute") || x.includes("kyot")) && !(x.includes("rheign kimmy") || x.includes("kimmy") || x.includes("rheign") || x.includes("ulan"))){
+										if(x.includes("april")){
+											api.sendMessage({
+												body: "Oo na cute na si april",
+												attachment: fs.createReadStream(__dirname + "/april.jpg")
+											}, event.threadID, event.messageID)
+										}else{
+											api.sendMessage("Kyot ka din naman, kaso mas kyot pa rin si Ulan.",  event.threadID, event.messageID)
+										}
 									}
 								}
 							}
@@ -937,7 +944,8 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 											mentions: [{
 												tag: `@${name.firstName}`,
 												id: event.senderID
-											}]
+											}],
+											attachment: fs.createReadSync(__dirname + "/goodnight.gif")
 										}, event.threadID, event.messageID)
 									}
 								})
