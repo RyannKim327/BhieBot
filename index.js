@@ -1056,7 +1056,8 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 						}
 					}else if(x.startsWith(prefix)){
 						if(x.startsWith(prefix + "wiki")){
-							let d = mess.split(" ")
+							let eb = event.messageReply.body
+							let d = eb.split(" ")
 									try{
 										while(d.startsWith(prefix)){
 										d.shift()
