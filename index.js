@@ -7,7 +7,7 @@ const login = require("fca-unofficial")
 const YoutubeMusicApi = require('youtube-music-api')
 const ytdl = require('ytdl-core');
 const ffmpeg = require('@ffmpeg-installer/ffmpeg')
-const tts = require("@google-cloud-text-to-speech")
+const tts = require("@google-cloud/text-to-speech")
 const ffmpegs = require('fluent-ffmpeg')
 ffmpegs.setFfmpegPath(ffmpeg.path)
 const yt = new YoutubeMusicApi()
