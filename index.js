@@ -7,9 +7,11 @@ const login = require("fca-unofficial")
 const YoutubeMusicApi = require('youtube-music-api')
 const ytdl = require('ytdl-core');
 const ffmpeg = require('@ffmpeg-installer/ffmpeg')
+const tts = require("@google-cloud-text-to-speech")
 const ffmpegs = require('fluent-ffmpeg')
 ffmpegs.setFfmpegPath(ffmpeg.path)
 const yt = new YoutubeMusicApi()
+const client = new tts.TextToSpeechClient()
 const prefix = "√"
 const separator = "|"
 const gc = process.env['gc']
@@ -152,6 +154,22 @@ async function whatIs(x){
 	})
 	return o
 }
+async function speech(x){
+	const r = {
+		input: {
+			text: x
+		},
+		voice: {
+			languageCode: 'en-US',
+			ssmlGender: 'NEUTRAL'
+		},
+		audioConfig: {
+			audioEncoding: 'MP3'
+		}
+	}
+	const o = await client.synthesizeSpeech(r)
+	return o
+}
 function f(p) {
 	let g = [
 		"bobo",
@@ -248,16 +266,21 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 							}
 						}
 					if(vip.includes(event.senderID) || gc.includes(event.threadID)){
+						if(x.startsWith("-say: ")){
+							let a = y
+							a.shift()
+							speech(a).then((r) => {
+								api.sendMessage(r, event.threadID)
+							})
+						}
 						if(x.startsWith("_admin_")){
 							api.sendMessage("Here are your commands:\n~Bot: Sleep\n~Bot: Wake-up\n~Bot: Off\n~Bot: On\n~Bot: Activate [ID]\n~Bot: Deactivate [ID]", event.threadID)
-						}
-						if(x.startsWith("_list_")){
+						}else if(x.startsWith("_list_")){
 							let mm = fs.readFileSync("list.txt", "utf-8").split("/----------/")
 							for (let i = 0; i < mm.length - 1; i++) {
 								api.sendMessage(mm[i], event.threadID)
 							}
-						}
-						if(x.startsWith("_off_")){
+						}else if(x.startsWith("_off_")){
 							let mm = fs.readFileSync("thread.txt", "utf-8").split("/")
 							for (let i = mm.length - 1; i >= 0; i--) {
 								api.getThreadInfo(parseInt(mm[i]), (err, data) => {
@@ -268,8 +291,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 									}
 								})
 							}
-						}
-						if(x.startsWith(prefix) && x.includes(separator)){
+						}else if(x.startsWith(prefix) && x.includes(separator)){
 							let m = mess.split(separator)
 							let c = m[0].split(" ")
 							let t = parseInt(m[1].replace(" ", ""))
