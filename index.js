@@ -839,10 +839,11 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 									}else if(x.includes("maganda ba ako") || x.includes("maganda ba ko")){
 										api.sendMessage("Ewan, isa lang naman akong di hamak na bot na walang ambag sa lipunan", event.threadID, event.messageID)
 									}else if(x.includes("masaket") || x.includes("peyn") || x.includes("ouch") || x.includes("awts") || x.includes("sakit") || x.includes("pain") || x.includes("pighati")){
+										api.setMessageReaction("😥", event.mesaageID, () => {}, true)
 										api.sendMessage({
-												body: "Kawawa",
-												attachment: fs.createReadStream(__dirname + "/edamage.jpg")
-										}, event.threadID)
+											body: "Kawawa naman",
+											attachment: fs.createReadStream(__dirname + "/edamage.jpg")
+										}, event.threadID, event.mesaageID)
 									}else if((x.includes("cute") || x.includes("kyot")) && !(x.includes("rheign kimmy") || x.includes("kimmy") || x.includes("rheign") || x.includes("ulan"))){
 										if(x.includes("april")){
 											api.sendMessage({
@@ -999,10 +1000,11 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 					}else if(!selves.includes(event.senderID) && x.includes("(2)") && vip.includes(event.senderID)){
 						api.sendMessage("(3)", event.threadID, event.messageID)
 					}else if(x.includes("masaket") || x.includes("peyn") || x.includes("ouch") || x.includes("awts") || x.includes("sakit") || x.includes("pain") || x.includes("pighati")){
-							api.sendMessage({
-									body: "Kawawa",
-									attachment: fs.createReadStream(__dirname + "/edamage.jpg")
-							}, event.threadID)
+						api.setMessageReaction("😥", event.mesaageID, () => {}, true)
+						api.sendMessage({
+								body: "Kawawa naman",
+								attachment: fs.createReadStream(__dirname + "/edamage.jpg")
+						}, event.threadID, event.messageReply.mesaageID)
 					}else if(x.startsWith(prefix + "info") && !b_users.includes(event.senderID)){
 						api.getUserInfo(parseInt(event.messageReply.senderID),  (err, data) => {
 							if(err){
