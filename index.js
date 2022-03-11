@@ -785,7 +785,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 										})
 									}
 								}
-								if(!selver.includes(event.senderID)){
+								if(!selves.includes(event.senderID)){
 									if(x.includes("welcome") && (x.includes("bhiebot") || x.includes("bhie"))){
 										api.setMessageReaction("😍", event.messageID, (err) => {}, true)
 										api.getUserInfo(event.senderID, (err, data) => {
@@ -971,6 +971,11 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 						api.sendMessage("(2)", event.threadID, event.messageID)
 					}else if(!selves.includes(event.senderID) && x.includes("(2)") && vip.includes(event.senderID)){
 						api.sendMessage("(3)", event.threadID, event.messageID)
+					}else if(x.includes("awts") || x.includes("sakit") || x.includes("pain") || x.includes("pighati")){
+							api.sendMessage({
+									body: "Kawawa",
+									attachment: fs.createReadStream(__dirname + "/edamage.jpg")
+							}, event.threadID)
 					}else if(x.startsWith(prefix + "info") && !b_users.includes(event.senderID)){
 						api.getUserInfo(parseInt(event.messageReply.senderID),  (err, data) => {
 							if(err){
