@@ -1004,7 +1004,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 						api.sendMessage({
 								body: "Kawawa naman",
 								attachment: fs.createReadStream(__dirname + "/edamage.jpg")
-						}, event.threadID, event.messageReply.mesaageID)
+						}, event.threadID, event.messageReply.messageID)
 					}else if(x.startsWith(prefix + "info") && !b_users.includes(event.senderID)){
 						api.getUserInfo(parseInt(event.messageReply.senderID),  (err, data) => {
 							if(err){
