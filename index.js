@@ -811,10 +811,10 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 										})
 									}else if(x.includes("maganda ba ako") || x.includes("maganda ba ko")){
 										api.sendMessage("Ewan, isa lang naman akong di hamak na bot na walang ambag sa lipunan", event.threadID, event.messageID)
-									}else if(x.includes("awts") || x.includes("sakit") || x.includes("pain") || x.includes("pighati")){
+									}else if(x.includes("masaket") || x.includes("peyn") || x.includes("ouch") || x.includes("awts") || x.includes("sakit") || x.includes("pain") || x.includes("pighati")){
 										api.sendMessage({
-											body: "Kawawa",
-											attachment: fs.createReadStream(__dirname + "/edamage.jpg")
+												body: "Kawawa",
+												attachment: fs.createReadStream(__dirname + "/edamage.jpg")
 										}, event.threadID)
 									}else if((x.includes("cute") || x.includes("kyot")) && !(x.includes("rheign kimmy") || x.includes("kimmy") || x.includes("rheign") || x.includes("ulan"))){
 										if(x.includes("april")){
@@ -971,7 +971,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 						api.sendMessage("(2)", event.threadID, event.messageID)
 					}else if(!selves.includes(event.senderID) && x.includes("(2)") && vip.includes(event.senderID)){
 						api.sendMessage("(3)", event.threadID, event.messageID)
-					}else if(x.includes("awts") || x.includes("sakit") || x.includes("pain") || x.includes("pighati")){
+					}else if(x.includes("masaket") || x.includes("peyn") || x.includes("ouch") || x.includes("awts") || x.includes("sakit") || x.includes("pain") || x.includes("pighati")){
 							api.sendMessage({
 									body: "Kawawa",
 									attachment: fs.createReadStream(__dirname + "/edamage.jpg")
