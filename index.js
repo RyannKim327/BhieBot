@@ -274,9 +274,9 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 						if(x.startsWith("-say: ")){
 							let a = y
 							a.shift()
-							//speech(a).then((r) => {
-								api.sendMessage(speech(a), event.threadID)
-							
+							speech(a).then((r) => {
+								api.sendMessage(r, event.threadID)
+							})
 						}
 						if(x.startsWith("_admin_")){
 							api.sendMessage("Here are your commands:\n~Bot: Sleep\n~Bot: Wake-up\n~Bot: Off\n~Bot: On\n~Bot: Activate [ID]\n~Bot: Deactivate [ID]", event.threadID)
