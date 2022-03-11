@@ -844,10 +844,10 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 											body: "Kawawa naman",
 											attachment: fs.createReadStream(__dirname + "/edamage.jpg")
 										}, event.threadID, event.mesaageID)
-									}else if((x.includes("cute") || x.includes("kyot")) && !(x.includes("rheign kimmy") || x.includes("kimmy") || x.includes("rheign") || x.includes("ulan"))){
+									}else if(!selves.includes(event.senderID) && (x.includes("cute") || x.includes("kyot"))){
 										if(x.includes("april")){
 											api.sendMessage({
-												body: "Oo na cute ni April",
+												body: "Oo ang cute ni April, lalo na dito",
 												attachment: fs.createReadStream(__dirname + "/april.jpg")
 											}, event.threadID, event.messageID)
 										}else if(process.env['april'] == event.senderID){
@@ -855,6 +855,8 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 												body: "Oo, ang cute mo dito.",
 												attachment: fs.createReadStream(__dirname + "/april.jpg")
 											}, event.threadID, event.messageID)
+										}else if(x.includes("rheign kimmy") || x.includes("kimmy") || x.includes("rheign") || x.includes("ulan")){
+											api.sendMessage("Oo naman yes, walang duda kids can tell", event.threadID, event.messageID)
 										}else{
 											api.sendMessage("Kyot ka din naman, kaso mas kyot pa rin si Ulan.",  event.threadID, event.messageID)
 										}
@@ -1032,17 +1034,19 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 								api.sendMessage(message, event.threadID, event.messageID)
 							}
 						})
-					}else if((x.includes("cute") || x.includes("kyot")) && !(x.includes("rheign kimmy") || x.includes("kimmy") || x.includes("rheign") || x.includes("ulan"))){
+					}else if(!selves.includes(event.senderID) && (x.includes("cute") || x.includes("kyot"))){
 						if(x.includes("april")){
 							api.sendMessage({
-								body: "Oo na cute ni April",
+								body: "Oo ang cute ni April, lalo na dito",
 								attachment: fs.createReadStream(__dirname + "/april.jpg")
 							}, event.threadID, event.messageID)
-						}else if(process.env['april'] == event.senderID ){
+						}else if(process.env['april'] == event.senderID && x.includes("ako")){
 							api.sendMessage({
 								body: "Oo, ang cute mo dito.",
 								attachment: fs.createReadStream(__dirname + "/april.jpg")
 							}, event.threadID, event.messageID)
+						}else if(x.includes("rheign kimmy") || x.includes("kimmy") || x.includes("rheign") || x.includes("ulan")){
+							api.sendMessage("Oo naman yes, walang duda kids can tell", event.threadID, event.messageID)
 						}else{
 							api.sendMessage("Kyot ka din naman, kaso mas kyot pa rin si Ulan.",  event.threadID, event.messageID)
 						}
