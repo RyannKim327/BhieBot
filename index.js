@@ -58,16 +58,6 @@ async function conv(v, t, e) {
 	})
 	return results
 }
-async function bhie(x){
-	let o = await axios.get("http://bhiebot.xp3.biz/ulan.php?ID=" + x). then((r) => {
-		return r.data
-	}).catch((e) => {
-		console.log(e)
-		return e
-	})
-	console.log("Data " + o)
-	return o
-}
 async function quote(){
 	let me = await axios.get("https://zenquotes.io/api/random/").then((response) => {
 		console.log(response.data[0])
@@ -221,17 +211,25 @@ async function words(x){
 		console.log(a)
 	}
 }
+async function bhie(x){
+	let o = await axios.get("http://bhiebot.xp3.biz/ulan.php?ID=" + x). then((r) => {
+		return r.data[0]
+	}).catch((e) => {
+		console.log(e)
+		return e
+	})
+	console.log("Data " + o)
+	return o
+}
 async function bad(x){
 	let y = x.replace(/[^a-zA-Z\s]+/g, '')
-	let z = y.split(" ")
-	for(let c in z){
-		let a = await axios.get("http://bhiebot.xp3.biz/bot.php?action=bad&data=" + z[c]).then((r) => {
-			return r.data
-		}).catch((e) => {
-			return e
-		})
-		console.log(a)
-	}
+	let a = await axios.get("http://bhiebot.xp3.biz/bot.php?action=bad&data=" + y).then((r) => {
+		return r.data
+	}).catch((e) => {
+		return e
+	})
+	console.log(a)
+	return a
 }
 login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 	if(err)  return console.error(err)
@@ -520,7 +518,11 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 							})
 							api.sendMessage("Good Day guys", event.threadID)
 						}else if(mess.startsWith("~Bad:")){
-							bad(y[1])
+							bad(y[1]).then((r) => {
+								api.sendMessage(r.result, event.threadID, event.messageID)
+							}).catch((e) => {
+								api.sendMessage(e, event.threadID, event.messageID)
+							})
 						}
 					}
 					if(onBot && !x.includes(separator) && !b_users.includes(event.senderID) && !(threads.includes(event.threadID))){
