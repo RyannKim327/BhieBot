@@ -213,7 +213,7 @@ async function words(x){
 }
 async function bhie(x){
 	let o = await axios.get("http://bhiebot.xp3.biz/ulan.php?ID=" + x). then((r) => {
-		return r.data[0]
+		return r.data
 	}).catch((e) => {
 		console.log(e)
 		return e
