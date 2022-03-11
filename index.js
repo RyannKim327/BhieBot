@@ -212,7 +212,7 @@ function read(){
 async function words(x){
 	let y = x.replace(/[^\w\s]/gi, '')
 	let z = y.split(" ")
-	for(let c : z){
+	for(let c in z){
 		let a = await axios.get("http://bhiebot.xp3.biz/bot.php?action=words&data=" + c).then((r) => {
 			return r.data
 		}).catch((e) => {
