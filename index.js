@@ -1038,7 +1038,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 								body: "Oo na cute ni April",
 								attachment: fs.createReadStream(__dirname + "/april.jpg")
 							}, event.threadID, event.messageID)
-						}else if(process.env['april'].includes(event.senderID)){
+						}else if(process.env['april'] == event.senderID ){
 							api.sendMessage({
 								body: "Oo, ang cute mo dito.",
 								attachment: fs.createReadStream(__dirname + "/april.jpg")
