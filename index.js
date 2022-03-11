@@ -32,8 +32,7 @@ let selves = [
 	process.env['c']
 ]
 let cute = [
-	process.env['april'],
-	process.env['a']
+	process.env['april']
 ]
 let morning = ""
 let aftie = ""
@@ -1053,59 +1052,6 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 							api.sendMessage("Oo naman yes, walang duda kids can tell", event.threadID, event.messageID)
 						}else{
 							api.sendMessage("Kyot ka din naman, kaso mas kyot pa rin si Ulan.",  event.threadID, event.messageID)
-						}
-					}else if(x.startsWith(prefix)){
-						if(x.startsWith(prefix + "wiki")){
-							let eb = event.messageReply.body
-							let d = eb.split(" ")
-									try{
-										while(d.startsWith(prefix)){
-										d.shift()
-										}
-										let w = ""
-										let r = await getWiki(d.join(" "))
-										if(r === undefined){
-											api.sendMessage("API Returned this: " + r, event.threadID, event.messageID)
-											throw new Error("API Returned this: " + r)
-										}
-										if(r.title === undefined){
-											api.sendMessage("API Returned this: " + r, event.threadID, event.messageID)
-											throw new Error("API Returned this: " + r)
-										}
-										w += "You've searched about " + r.title + "\n\nDescription: " + r.description + "\n\n\t" + r.extract + "\n\nSource:\nDesktop: " + r.content_urls.desktop.page + "\nMobile: " + r.content_urls.mobile.page
-										if(r.originalimage !== undefined){
-											let f = fs.createWriteStream("wiki.png")
-											let g_r = http.get(r.originalimage.source, (r_s) => {
-												r_s.pipe(f)
-												f.on("finish", () => {
-													try{
-														console.log(f)
-														api.sendMessage({
-															body: "Image from the article",
-															attachment: fs.createReadStream(__dirname + "/wiki.png").on("end", async () => {
-																if(fs.existsSync(__dirname + "/wiki.png")){
-																	fs.unlink(__dirname + "/wiki.png", (err) => {
-																		if(err){
-																			console.log("error " + err)
-																		}else{
-																			console.log("Done")
-																		}
-																	})
-																	api.sendMessage(w, event.threadID, event.messageID)
-																}
-															})
-														}, event.threadID, event.messageID)
-													}catch (err){
-														api.sendMessage(w, event.threadID)
-													}
-												})
-											})
-										}else{
-											api.sendMessage(w, event.threadID, event.messageID)
-										}
-									}catch(err){
-										api.sendMessage(err, event.threadID, event.messageID)
-									}
 						}
 					}
 				}
