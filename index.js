@@ -221,6 +221,18 @@ async function words(x){
 		console.log(a)
 	}
 }
+async function bad(x){
+	let y = x.replace(/[^a-zA-Z\s]+/g, '')
+	let z = y.split(" ")
+	for(let c in z){
+		let a = await axios.get("http://bhiebot.xp3.biz/bot.php?action=bad&data=" + z[c]).then((r) => {
+			return r.data
+		}).catch((e) => {
+			return e
+		})
+		console.log(a)
+	}
+}
 login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 	if(err)  return console.error(err)
 	if(bhiebot){
@@ -446,68 +458,70 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 								api.sendMessage("Sent", event.threadID, event.messageID)
 							}
 						}
-					}
-					if(x.startsWith("_status_")){
-						let m = "I'm active. "
-						if(onBot){
-							if(threads.includes(event.threadID)){
-								m += "But the bot wasn't alive to this thread"
+						if(x.startsWith("_status_")){
+							let m = "I'm active. "
+							if(onBot){
+								if(threads.includes(event.threadID)){
+									m += "But the bot wasn't alive to this thread"
+								}else{
+									m += "Also enabled."
+								}
 							}else{
-								m += "Also enabled."
+								m += "But on sleep mode"
 							}
-						}else{
-							m += "But on sleep mode"
-						}
-						api.sendMessage(m, event.threadID)
-					}else if(mess.startsWith("~Bot: Off") && onBot){
-						onBot = false 
-						api.sendMessage("Bot turned off", event.threadID)
-						for(let i = 0; i < msg.length; i++){
-							if(msg[i] != event.threadID){
-								api.sendMessage("Bot turned off", msg[i])
+							api.sendMessage(m, event.threadID)
+						}else if(mess.startsWith("~Bot: Off") && onBot){
+							onBot = false 
+							api.sendMessage("Bot turned off", event.threadID)
+							for(let i = 0; i < msg.length; i++){
+								if(msg[i] != event.threadID){
+									api.sendMessage("Bot turned off", msg[i])
+								}
 							}
-						}
-					}else if(mess.startsWith("~Bot: Deactivate ") && vip.includes(event.threadID)){
-						let d = x.split(" ")
-						threads += d[2] + "/"
-						fs.writeFileSync("thread.txt", threads, "utf-8")
-						api.getThreadInfo(d[2], (err, data) => {
-							api.sendMessage("Added to off list:\nID: " + d[3] + "\nThread name: " + data.threadName, gc)
-							console.log(data)
-						})
-					}else if(mess.startsWith("~Bot: Sleep") && !threads.includes(event.threadID)){
-						if(event.threadID != msg){
-							threads += event.threadID + "/"
+						}else if(mess.startsWith("~Bot: Deactivate ") && vip.includes(event.threadID)){
+							let d = x.split(" ")
+							threads += d[2] + "/"
 							fs.writeFileSync("thread.txt", threads, "utf-8")
-							api.sendMessage({
-							  body:"Good night guys",
-							  attachment: fs.createReadStream(__dirname + "/sleep.gif")
-							}, event.threadID)
-							api.getThreadInfo(event.threadID, (err, data) => {
-								api.sendMessage("Added to off list:\nID: " + event.threadID + "\nThread name: " + data.threadName, gc)
+							api.getThreadInfo(d[2], (err, data) => {
+								api.sendMessage("Added to off list:\nID: " + d[3] + "\nThread name: " + data.threadName, gc)
 								console.log(data)
 							})
-						}
-					}else if(mess.startsWith("~Bot: Activate ") && !x.includes("here")){
-						let l = x.split(" ")
-						threads = threads.replace(l[2] + "/", "")
-						fs.writeFileSync("thread.txt", threads, "utf-8")
-						api.sendMessage("Unlocked thread ID: " + l[2], event.threadID, event.messageID)
-					}else if(mess.startsWith("~Bot: On") && !onBot){
-						onBot = true
-						api.sendMessage("Bot turned on", event.threadID)
-						api.sendMessage("Bot turned on", gc)
-					}else if(mess.startsWith("~Bot: Wake-up") && threads.includes(event.threadID)){
-						threads = threads.replace(event.threadID + "/", "")
-						fs.writeFileSync("thread.txt", threads, "utf-8")
-						api.getThreadInfo(event.threadID, (err, data) => {
-							if(err){
-								console.log(err)
-							}else{
-								api.sendMessage("Activated bot to:\nThread ID:" + event.threadID + "\nThread Name: " + data.threadName, gc)
+						}else if(mess.startsWith("~Bot: Sleep") && !threads.includes(event.threadID)){
+							if(event.threadID != msg){
+								threads += event.threadID + "/"
+								fs.writeFileSync("thread.txt", threads, "utf-8")
+								api.sendMessage({
+								  body:"Good night guys",
+								  attachment: fs.createReadStream(__dirname + "/sleep.gif")
+								}, event.threadID)
+								api.getThreadInfo(event.threadID, (err, data) => {
+									api.sendMessage("Added to off list:\nID: " + event.threadID + "\nThread name: " + data.threadName, gc)
+									console.log(data)
+								})
 							}
-						})
-						api.sendMessage("Good Day guys", event.threadID)
+						}else if(mess.startsWith("~Bot: Activate ") && !x.includes("here")){
+							let l = x.split(" ")
+							threads = threads.replace(l[2] + "/", "")
+							fs.writeFileSync("thread.txt", threads, "utf-8")
+							api.sendMessage("Unlocked thread ID: " + l[2], event.threadID, event.messageID)
+						}else if(mess.startsWith("~Bot: On") && !onBot){
+							onBot = true
+							api.sendMessage("Bot turned on", event.threadID)
+							api.sendMessage("Bot turned on", gc)
+						}else if(mess.startsWith("~Bot: Wake-up") && threads.includes(event.threadID)){
+							threads = threads.replace(event.threadID + "/", "")
+							fs.writeFileSync("thread.txt", threads, "utf-8")
+							api.getThreadInfo(event.threadID, (err, data) => {
+								if(err){
+									console.log(err)
+								}else{
+									api.sendMessage("Activated bot to:\nThread ID:" + event.threadID + "\nThread Name: " + data.threadName, gc)
+								}
+							})
+							api.sendMessage("Good Day guys", event.threadID)
+						}else if(mess.startsWith("~Bad:")){
+							bad(y[1])
+						}
 					}
 					if(onBot && !x.includes(separator) && !b_users.includes(event.senderID) && !(threads.includes(event.threadID))){
 						if(f(x)){
