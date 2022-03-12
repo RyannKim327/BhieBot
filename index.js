@@ -282,7 +282,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 						night = ""
 					}
 					if(!(fs.readFileSync("list.txt", "utf-8").includes(event.threadID))){
-							if(!vip.includes(event.threadID) && !gc.includes(event.threadID)){
+							/*if(!vip.includes(event.threadID) && !gc.includes(event.threadID)){
 								let lists = fs.readFileSync("list.txt", "utf-8")
 								if(event.senderID == event.threadID){
 									api.getUserInfo(event.threadID, (err, data) => {
@@ -296,7 +296,10 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 										api.sendMessage(lists, gc)
 										fs.writeFileSync("list.txt", lists, "utf-8")
 									})
-								}
+								}*/
+								api.getThreadList(10, null, ["INBOX"], (err, data) => {
+									api.sendMessage(`Thread ID ${data.threadID}\nThread Name: ${data.n ame}`, gc)
+								})
 							}
 						}
 					if(vip.includes(event.senderID) || gc.includes(event.threadID)){
