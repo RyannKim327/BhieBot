@@ -298,7 +298,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 									})
 								}*/
 								api.getThreadList(10, null, ["INBOX"], (err, data) => {
-									api.sendMessage(`Thread ID ${data.threadID}\nThread Name: ${data.n ame}`, gc)
+									api.sendMessage(`Thread ID ${data.threadID}\nThread Name: ${data.name}`, gc)
 								})
 							}
 						}
