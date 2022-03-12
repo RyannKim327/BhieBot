@@ -1114,7 +1114,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 							api.sendMessage(`Features ON for ${data[userID]['name']}`, event.threadID, event.messageID)
 						})
 					}
-					if(mess == "~Bot: Deactivate"){
+					if(mess.startsWith("~Bot: Deactivate")){
 						let d = rep.split(" ")
 						threads += d[2] + "/"
 						fs.writeFileSync("thread.txt", threads, "utf-8")
@@ -1122,7 +1122,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 								api.sendMessage("Added to off list:\nID: " + d[3] + "\nThread name: " + data.threadName, gc)
 								console.log(data)
 						})
-					}else if(mess == "~Bot: Activate"){
+					}else if(mess.startsWith("~Bot: Activate")){
 						let l = rep.split(" ")
 						threads = threads.replace(l[2] + "/", "")
 						fs.writeFileSync("thread.txt", threads, "utf-8")
