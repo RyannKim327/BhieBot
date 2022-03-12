@@ -245,7 +245,9 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 	api.setOptions({listenEvents: true, selfListen: true})
 	var listenEmitter = api.listen(async (err, event) => {
 		if(err) return console.error(err)
-		api.markAsRead(event.threadID)
+		api.markAsReadAll((err) => {
+			console.log(err)
+		})
 		if(event.body != undefined){
 			words(event.body)
 		}
@@ -1028,8 +1030,6 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 				let x = mess.toLowerCase()
 				let y = x.split(" ")
 				if(event.body != undefined){
-					let m = event.body
-					let x = m.toLowerCase() 
 					if(!selves.includes(event.senderID) && vip.includes(event.messageReply.senderID) && (x.includes("salamat") || x.includes("thank") || x.includes("tnx"))){
 						api.setMessageReaction("😻", event.messageID, (err) => {}, true)
 						api.getUserInfo(event.senderID, (err, data) => {
@@ -1097,20 +1097,37 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 						})
 					}
 				}
-				if(mess.startsWith("~Off") && !b_users.includes(event.messageReply.senderID) && vip.includes(event.senderID) && !vip.includes(event.messageReply.senderID)){
-					let userID = event.messageReply.senderID
-					b_users += userID + " "
-					api.getUserInfo(userID, (err, data) => {
-						api.sendMessage(`Features OFF for ${data[userID]['name']}`, event.threadID, event.messageID)
-					})
-				}
-				if(mess.startsWith("~On") && b_users.includes(event.messageReply.senderID) && vip.includes(event.senderID) && !vip.includes(event.messageReply.senderID)){
-					let userID = event.messageReply.senderID
-					let b_u =  b_users.replace(userID + " ", "")
-					b_users = b_u
-					api.getUserInfo(userID, (err, data) => {
-						api.sendMessage(`Features ON for ${data[userID]['name']}`, event.threadID, event.messageID)
-					})
+				if(gc.includes(event.threadID) || vip.includes(event.senderID)){
+					let m = event.messageReply.body
+					let rep = m.toLowerCase() 
+					if(mess.startsWith("~Off") && !b_users.includes(event.messageReply.senderID) && !vip.includes(event.messageReply.senderID)){
+						let userID = event.messageReply.senderID
+						b_users += userID + " "
+						api.getUserInfo(userID, (err, data) => {
+							api.sendMessage(`Features OFF for ${data[userID]['name']}`, event.threadID, event.messageID)
+						})
+					}else if(mess.startsWith("~On") && b_users.includes(event.messageReply.senderID) && !vip.includes(event.messageReply.senderID)){
+						let userID = event.messageReply.senderID
+						let b_u =  b_users.replace(userID + " ", "")
+						b_users = b_u
+						api.getUserInfo(userID, (err, data) => {
+							api.sendMessage(`Features ON for ${data[userID]['name']}`, event.threadID, event.messageID)
+						})
+					}
+					if(mess == "~Bot: Deactivate"){
+						let d = rep.split(" ")
+						threads += d[2] + "/"
+						fs.writeFileSync("thread.txt", threads, "utf-8")
+						api.getThreadInfo(d[2], (err, data) => {
+								api.sendMessage("Added to off list:\nID: " + d[3] + "\nThread name: " + data.threadName, gc)
+								console.log(data)
+						})
+					}else if(mess == "~Bot: Activate"){
+						let l = rep.split(" ")
+						threads = threads.replace(l[2] + "/", "")
+						fs.writeFileSync("thread.txt", threads, "utf-8")
+						api.sendMessage("Unlocked thread ID: " + l[2], event.threadID, event.messageID)
+					}
 				}
 			break;
 		}
