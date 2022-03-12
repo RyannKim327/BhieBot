@@ -1087,6 +1087,14 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 						}else{
 							api.sendMessage("Kyot ka din naman, kaso mas kyot pa rin si Ulan.",  event.threadID, event.messageID)
 						}
+					}else if(x.startsWith(prefix + "unsent") && vip.includes(event.senderID)){
+						api.unsentMessage(event.messageReply.messageID, (err) => {
+							if(err){
+								console.log(err)
+							}else{
+								api.sendMessage("Done", event.threadID, event.messageID)
+							}
+						})
 					}
 				}
 				if(mess.startsWith("~Off") && !b_users.includes(event.messageReply.senderID) && vip.includes(event.senderID) && !vip.includes(event.messageReply.senderID)){
