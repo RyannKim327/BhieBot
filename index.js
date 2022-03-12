@@ -1099,9 +1099,10 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 				}
 				if(gc.includes(event.threadID) || vip.includes(event.senderID)){
 					let m = event.messageReply.body
-					let rep = m.toLowerCase() 
+					let rep = m.toLowerCase()
 					let threads = read()
-					let d = rep.split("\\s+")
+					let e = rep.split(/\r?\n/)
+					let d = e[0].split(" ")
 					if(mess.startsWith("~Off") && !b_users.includes(event.messageReply.senderID) && !vip.includes(event.messageReply.senderID)){
 						let userID = event.messageReply.senderID
 						b_users += userID + " "
