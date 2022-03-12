@@ -1064,6 +1064,9 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 								}
 								let message = "Name: " + data[event.messageReply.senderID]['name'] + "\n"
 								message += "Gender: " + gender + "\n"
+								if(data[event.messageReply.senderID]['alternateName'] != undefined){
+									message += data[event.messageReply.senderID]['alternateName']
+								}
 								message += "Profile Link: " + data[event.messageReply.senderID]['profileUrl']
 								api.sendMessage(message, event.threadID, event.messageID)
 							}
