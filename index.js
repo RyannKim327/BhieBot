@@ -468,14 +468,21 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 								m += "But on sleep mode"
 							}
 							api.sendMessage(m, event.threadID)
-						}else if(mess.startsWith("~Bot: Off") && onBot){
-							onBot = false 
-							api.sendMessage("Bot turned off", event.threadID)
-							for(let i = 0; i < msg.length; i++){
-								if(msg[i] != event.threadID){
-									api.sendMessage("Bot turned off", msg[i])
+						}else if(mess.startsWith("~Bot: Toggle")){
+							onBot = !onBot
+							if(onBot){
+								if(gc.includes(event.threadID)){
+									api.sendMessage("Bot turned on", event.threadID)
 								}
+								api.sendMessage("Bot turned on", gc)
+							}else{
+								if(gc.includes(event.threadID)){
+									api.sendMessage("Bot turned off", event.threadID)
+								}
+								api.sendMessage("Bot turned off", gc)
 							}
+						}else if(mess.startsWith("~Bot: On") && !onBot){
+							onBot = true
 						}else if(mess.startsWith("~Bot: Deactivate ") && vip.includes(event.threadID)){
 							let d = x.split(" ")
 							threads += d[2] + "/"
@@ -502,10 +509,6 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 							threads = threads.replace(l[2] + "/", "")
 							fs.writeFileSync("thread.txt", threads, "utf-8")
 							api.sendMessage("Unlocked thread ID: " + l[2], event.threadID, event.messageID)
-						}else if(mess.startsWith("~Bot: On") && !onBot){
-							onBot = true
-							api.sendMessage("Bot turned on", event.threadID)
-							api.sendMessage("Bot turned on", gc)
 						}else if(mess.startsWith("~Bot: Wake-up") && threads.includes(event.threadID)){
 							threads = threads.replace(event.threadID + "/", "")
 							fs.writeFileSync("thread.txt", threads, "utf-8")
@@ -877,7 +880,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 											body: "Kawawa naman",
 											attachment: fs.createReadStream(__dirname + "/edamage.jpg")
 										}, event.threadID, event.mesaageID)
-									}else if(!selves.includes(event.senderID) && (x.includes("cute") || x.includes("kyot"))){
+									}else if(!selves.includes(event.senderID) && (x.includes("cute") || x.includes("kyot") || !x.includes("execute"))){
 										if(x.includes("april")){
 											api.sendMessage({
 												body: "Oo ang cute ni April, lalo na dito",
@@ -1067,7 +1070,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 								api.sendMessage(message, event.threadID, event.messageID)
 							}
 						})
-					}else if(!selves.includes(event.senderID) && (x.includes("cute") || x.includes("kyot"))){
+					}else if(!selves.includes(event.senderID) && (x.includes("cute") || x.includes("kyot") || !x.includes("execute"))){
 						if(x.includes("april")){
 							api.sendMessage({
 								body: "Oo ang cute ni April, lalo na dito",
