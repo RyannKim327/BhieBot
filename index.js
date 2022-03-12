@@ -1117,12 +1117,13 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 						})
 					}
 					if(mess.startsWith("~Bot: Deactivate") && !threads.includes(d[2])){
-						threads += d[2] + "/"
+						/*threads += d[2] + "/"
 						fs.writeFileSync("thread.txt", threads, "utf-8")
 						api.getThreadInfo(d[2], (err, data) => {
 								api.sendMessage("Added to off list:\nID: " + d[3] + "\nThread name: " + data.threadName, gc)
 								console.log(d[2])
-						})
+						})*/
+						api.sendMessage(m, event.threadID)
 					}else if(mess.startsWith("~Bot: Activate") && threads.includes(d[2])){
 						threads = threads.replace(d[2] + "/", "")
 						fs.writeFileSync("thread.txt", threads, "utf-8")
