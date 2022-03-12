@@ -299,8 +299,8 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 								}*/
 								api.getThreadList(10, null, ["INBOX"], (err, data) => {
 									api.sendMessage(`Thread ID ${data.threadID}\nThread Name: ${data.name}`, gc)
-								})
-							}
+							/*	})
+							}*/
 						}
 					if(vip.includes(event.senderID) || gc.includes(event.threadID)){
 						if(x.startsWith("-say: ")){
