@@ -1120,12 +1120,13 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 						fs.writeFileSync("thread.txt", threads, "utf-8")
 						api.getThreadInfo(d[2], (err, data) => {
 								api.sendMessage("Added to off list:\nID: " + d[3] + "\nThread name: " + data.threadName, gc)
-								console.log(data)
+								console.log(d[2])
 						})
 					}else if(mess.startsWith("~Bot: Activate")){
 						let l = rep.split(" ")
 						threads = threads.replace(l[2] + "/", "")
 						fs.writeFileSync("thread.txt", threads, "utf-8")
+						console.log(l[2])
 						api.sendMessage("Unlocked thread ID: " + l[2], event.threadID, event.messageID)
 					}
 				}
