@@ -471,18 +471,16 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 						}else if(mess.startsWith("~Bot: Toggle")){
 							onBot = !onBot
 							if(onBot){
-								if(gc.includes(event.threadID)){
+								if(!gc.includes(event.threadID)){
 									api.sendMessage("Bot turned on", event.threadID)
 								}
 								api.sendMessage("Bot turned on", gc)
 							}else{
-								if(gc.includes(event.threadID)){
+								if(!gc.includes(event.threadID)){
 									api.sendMessage("Bot turned off", event.threadID)
 								}
 								api.sendMessage("Bot turned off", gc)
 							}
-						}else if(mess.startsWith("~Bot: On") && !onBot){
-							onBot = true
 						}else if(mess.startsWith("~Bot: Deactivate ") && vip.includes(event.threadID)){
 							let d = x.split(" ")
 							threads += d[2] + "/"
@@ -880,7 +878,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 											body: "Kawawa naman",
 											attachment: fs.createReadStream(__dirname + "/edamage.jpg")
 										}, event.threadID, event.mesaageID)
-									}else if(!selves.includes(event.senderID) && (x.includes("cute") || x.includes("kyot") || !x.includes("execute"))){
+									}else if(!selves.includes(event.senderID) && (x.includes("cute") || x.includes("kyot")) && !x.includes("execute")){
 										if(x.includes("april")){
 											api.sendMessage({
 												body: "Oo ang cute ni April, lalo na dito",
@@ -1070,7 +1068,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 								api.sendMessage(message, event.threadID, event.messageID)
 							}
 						})
-					}else if(!selves.includes(event.senderID) && (x.includes("cute") || x.includes("kyot") || !x.includes("execute"))){
+					}else if(!selves.includes(event.senderID) && (x.includes("cute") || x.includes("kyot")) && !x.includes("execute")){
 						if(x.includes("april")){
 							api.sendMessage({
 								body: "Oo ang cute ni April, lalo na dito",
