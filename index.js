@@ -1101,7 +1101,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 					let m = event.messageReply.body
 					let rep = m.toLowerCase() 
 					let threads = read()
-					let d = rep.split("\+s")
+					let d = rep.split("\\s+")
 					if(mess.startsWith("~Off") && !b_users.includes(event.messageReply.senderID) && !vip.includes(event.messageReply.senderID)){
 						let userID = event.messageReply.senderID
 						b_users += userID + " "
