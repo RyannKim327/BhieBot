@@ -1100,6 +1100,8 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 				if(gc.includes(event.threadID) || vip.includes(event.senderID)){
 					let m = event.messageReply.body
 					let rep = m.toLowerCase() 
+					let threads = read()
+					let d = rep.split(" ")
 					if(mess.startsWith("~Off") && !b_users.includes(event.messageReply.senderID) && !vip.includes(event.messageReply.senderID)){
 						let userID = event.messageReply.senderID
 						b_users += userID + " "
@@ -1114,20 +1116,18 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 							api.sendMessage(`Features ON for ${data[userID]['name']}`, event.threadID, event.messageID)
 						})
 					}
-					if(mess.startsWith("~Bot: Deactivate")){
-						let d = rep.split(" ")
+					if(mess.startsWith("~Bot: Deactivate") && !threads.includes(d[2])){
 						threads += d[2] + "/"
 						fs.writeFileSync("thread.txt", threads, "utf-8")
 						api.getThreadInfo(d[2], (err, data) => {
 								api.sendMessage("Added to off list:\nID: " + d[3] + "\nThread name: " + data.threadName, gc)
 								console.log(d[2])
 						})
-					}else if(mess.startsWith("~Bot: Activate")){
-						let l = rep.split(" ")
-						threads = threads.replace(l[2] + "/", "")
+					}else if(mess.startsWith("~Bot: Activate") && threads.includes(d[2])){
+						threads = threads.replace(d[2] + "/", "")
 						fs.writeFileSync("thread.txt", threads, "utf-8")
-						console.log(l[2])
-						api.sendMessage("Unlocked thread ID: " + l[2], event.threadID, event.messageID)
+						console.log(d[2])
+						api.sendMessage("Unlocked thread ID: " + d[2], event.threadID, event.messageID)
 					}
 				}
 			break;
