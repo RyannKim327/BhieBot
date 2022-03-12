@@ -282,7 +282,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 						night = ""
 					}
 					if(!(fs.readFileSync("list.txt", "utf-8").includes(event.threadID))){
-							/*if(!vip.includes(event.threadID) && !gc.includes(event.threadID)){
+							if(!vip.includes(event.threadID) && !gc.includes(event.threadID)){
 								let lists = fs.readFileSync("list.txt", "utf-8")
 								if(event.senderID == event.threadID){
 									api.getUserInfo(event.threadID, (err, data) => {
@@ -297,10 +297,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 										fs.writeFileSync("list.txt", lists, "utf-8")
 									})
 								}
-							}*/
-							api.getThreadList(10, null, ["INBOX"], (err, data) => {
-								api.sendMessage(`Thread ID ${data.threadID}\nThread Name: ${data.name}`, gc)
-							})
+							}
 						}
 					if(vip.includes(event.senderID) || gc.includes(event.threadID)){
 						if(x.startsWith("-say: ")){
@@ -313,10 +310,17 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 						if(x.startsWith("_admin_")){
 							api.sendMessage("Here are your commands:\n~Bot: Sleep\n~Bot: Wake-up\n~Bot: Off\n~Bot: On\n~Bot: Activate [ID]\n~Bot: Deactivate [ID]", event.threadID)
 						}else if(x.startsWith("_list_")){
-							let mm = fs.readFileSync("list.txt", "utf-8").split("/----------/")
+							/*let mm = fs.readFileSync("list.txt", "utf-8").split("/----------/")
 							for (let i = 0; i < mm.length - 1; i++) {
 								api.sendMessage(mm[i], event.threadID)
-							}
+							}*/
+							api.getThreadList(10, null, ["INBOX"], (err, data) => {
+								if(err){
+									console.log(err)
+								}else{
+									api.sendMessage(`Thread ID ${data.threadID}\nThread Name: ${data.name}`, gc)
+								}
+							})
 						}else if(x.startsWith("_off_")){
 							let mm = fs.readFileSync("thread.txt", "utf-8").split("/")
 							for (let i = mm.length - 1; i >= 0; i--) {
