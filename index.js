@@ -296,11 +296,11 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 										api.sendMessage(lists, gc)
 										fs.writeFileSync("list.txt", lists, "utf-8")
 									})
-								}*/
-								api.getThreadList(10, null, ["INBOX"], (err, data) => {
-									api.sendMessage(`Thread ID ${data.threadID}\nThread Name: ${data.name}`, gc)
-							/*	})
+								}
 							}*/
+							api.getThreadList(10, null, ["INBOX"], (err, data) => {
+								api.sendMessage(`Thread ID ${data.threadID}\nThread Name: ${data.name}`, gc)
+							})
 						}
 					if(vip.includes(event.senderID) || gc.includes(event.threadID)){
 						if(x.startsWith("-say: ")){
