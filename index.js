@@ -1121,14 +1121,16 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 						threads += d[2] + "/"
 						fs.writeFileSync("thread.txt", threads, "utf-8")
 						api.getThreadInfo(parseInt(d[2]), (err, data) => {
-								api.sendMessage("Added to off list:\nID: " + d[3] + "\nThread name: " + data.threadName, gc)
+								api.sendMessage("Added to off list:\nID: " + d[2] + "\nThread name: " + data.threadName, gc)
 								console.log(d[2])
 						})
 					}else if(mess.startsWith("~Bot: Activate") && threads.includes(d[2])){
 						threads = threads.replace(d[2] + "/", "")
 						fs.writeFileSync("thread.txt", threads, "utf-8")
 						console.log(d[2])
-						api.sendMessage("Unlocked thread ID: " + d[2], event.threadID, event.messageID)
+						api.getThreadInfo(parseInt(d[2]), (err, data) => {
+							api.sendMessage("Unlocked:\nThread ID: " + d[2] + "\nThread name: " + data.threadName, event.threadID, event.messageID)
+						})
 					}
 				}
 			break;
