@@ -32,7 +32,7 @@ let selves = [
 	process.env['c']
 ]
 let cute = [
-	process.env['april']
+	process.env['abril']
 ]
 let morning = ""
 let aftie = ""
