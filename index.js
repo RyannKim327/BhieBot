@@ -886,7 +886,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 												body: "Oo ang cute ni April, lalo na dito",
 												attachment: fs.createReadStream(__dirname + "/april.jpg")
 											}, event.threadID, event.messageID)
-										}else if(cute.includes(event.senderID)){
+										}else if(cute.includes(event.senderID) && x.includes("ako")){
 											api.sendMessage({
 												body: "Oo, ang cute mo dito.",
 												attachment: fs.createReadStream(__dirname + "/april.jpg")
@@ -1118,13 +1118,12 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 						})
 					}
 					if(mess.startsWith("~Bot: Deactivate") && !threads.includes(d[2])){
-						/*threads += d[2] + "/"
+						threads += d[2] + "/"
 						fs.writeFileSync("thread.txt", threads, "utf-8")
 						api.getThreadInfo(parseInt(d[2]), (err, data) => {
 								api.sendMessage("Added to off list:\nID: " + d[3] + "\nThread name: " + data.threadName, gc)
 								console.log(d[2])
-						})*/
-						api.sendMessage(d[2], event.threadID)
+						})
 					}else if(mess.startsWith("~Bot: Activate") && threads.includes(d[2])){
 						threads = threads.replace(d[2] + "/", "")
 						fs.writeFileSync("thread.txt", threads, "utf-8")
