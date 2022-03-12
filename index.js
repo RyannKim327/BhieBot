@@ -1088,7 +1088,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 							api.sendMessage("Kyot ka din naman, kaso mas kyot pa rin si Ulan.",  event.threadID, event.messageID)
 						}
 					}else if(x.startsWith(prefix + "unsent") && vip.includes(event.senderID)){
-						api.unsentMessage(event.messageReply.messageID, (err) => {
+						api.unsendMessage(event.messageReply.messageID, (err) => {
 							if(err){
 								console.log(err)
 							}else{
