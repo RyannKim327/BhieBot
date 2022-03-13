@@ -234,11 +234,6 @@ async function bad(x){
 login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 	if(err)  return console.error(err)
 	if(bhiebot){
-		/*bhie(1).then((r) => {
-			api.sendMessage(r.data, gc)
-		}).catch((e) => {
-			api.sendMessage(e, gc)
-		})*/
 		api.sendMessage("BhieBot is now active", gc)
 		bhiebot = false
 	}
@@ -246,11 +241,10 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 	var listenEmitter = api.listen(async (err, event) => {
 		if(err) return console.error(err)
 		api.markAsReadAll((err) => {
-			console.log(err)
+			if(err){
+				console.log(err)
+			}
 		})
-		/*if(event.body != undefined){
-			words(event.body)
-		}*/
 		switch(event.type){
 			case "message":
 				if(event.body != null){
@@ -281,24 +275,6 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 						aftie = ""
 						night = ""
 					}
-					if(!(fs.readFileSync("list.txt", "utf-8").includes(event.threadID))){
-							if(!vip.includes(event.threadID) && !gc.includes(event.threadID)){
-								let lists = fs.readFileSync("list.txt", "utf-8")
-								if(event.senderID == event.threadID){
-									api.getUserInfo(event.threadID, (err, data) => {
-										lists += "Thread ID: " + event.threadID + "\nThread Name: " + data[event.threadID]['name'] + "\n/----------/\n"
-										api.sendMessage(lists, gc)
-										fs.writeFileSync("list.txt", lists, "utf-8")
-									})
-								}else{
-									api.getThreadInfo(event.threadID, (err, data) => {
-										lists += "Thread ID: " + event.threadID + "\nThread Name: " + data.threadName + "\n/----------/\n"
-										api.sendMessage(lists, gc)
-										fs.writeFileSync("list.txt", lists, "utf-8")
-									})
-								}
-							}
-						}
 					if(vip.includes(event.senderID) || gc.includes(event.threadID)){
 						if(x.startsWith("-say: ")){
 							let a = y
@@ -310,17 +286,14 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 						if(x.startsWith("_admin_")){
 							api.sendMessage("Here are your commands:\n~Bot: Sleep\n~Bot: Wake-up\n~Bot: Off\n~Bot: On\n~Bot: Activate [ID]\n~Bot: Deactivate [ID]", event.threadID)
 						}else if(x.startsWith("_list_")){
-							/*let mm = fs.readFileSync("list.txt", "utf-8").split("/----------/")
-							for (let i = 0; i < mm.length - 1; i++) {
-								api.sendMessage(mm[i], event.threadID)
-							}*/
 							api.getThreadList(20, null, ["INBOX"], (err, data) => {
-								//console.log(data)
 								if(err){
 									console.log(err)
 								}else{
 									for(let i = 0; i < data.length; i++){
-										api.sendMessage(`Thread ID ${data[i].threadID}\nThread Name: ${data[i].name}\nIs Group: ${data[i].isGroup}`, gc)
+										if(!vip.includes(data[i].threadID) && !gc.includes(data[i].threadID)){
+											api.sendMessage(`Thread ID ${data[i].threadID}\nThread Name: ${data[i].name}\nIs Group: ${data[i].isGroup}`, gc)
+										}
 									}
 								}
 							})
@@ -501,6 +474,11 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 								api.sendMessage("Added to off list:\nID: " + d[3] + "\nThread name: " + data.threadName, gc)
 								console.log(data)
 							})
+						}else if(mess.startsWith("~Bot: Activate ") && !x.includes("here")){
+							let l = x.split(" ")
+							threads = threads.replace(l[2] + "/", "")
+							fs.writeFileSync("thread.txt", threads, "utf-8")
+							api.sendMessage("Unlocked thread ID: " + l[2], event.threadID, event.messageID)
 						}else if(mess.startsWith("~Bot: Sleep") && !threads.includes(event.threadID)){
 							if(event.threadID != msg){
 								threads += event.threadID + "/"
@@ -514,12 +492,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 									console.log(data)
 								})
 							}
-						}else if(mess.startsWith("~Bot: Activate ") && !x.includes("here")){
-							let l = x.split(" ")
-							threads = threads.replace(l[2] + "/", "")
-							fs.writeFileSync("thread.txt", threads, "utf-8")
-							api.sendMessage("Unlocked thread ID: " + l[2], event.threadID, event.messageID)
-						}/*else if(mess.startsWith("~Bot: Wake-up") && threads.includes(event.threadID)){
+						}else if(mess.startsWith("~Bot: Wake-up") && threads.includes(event.threadID)){
 							threads = threads.replace(event.threadID + "/", "")
 							fs.writeFileSync("thread.txt", threads, "utf-8")
 							api.getThreadInfo(event.threadID, (err, data) => {
@@ -530,11 +503,11 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 								}
 							})
 							api.sendMessage("Good Day guys", event.threadID)
-						}*/
+						}
 					}
 					if(onBot && !x.includes(separator) && !b_users.includes(event.senderID) && !(threads.includes(event.threadID))){
 						if(f(x)){
-							api.setMessageReaction("🙂", event.messageID, (err) => {}, true)
+							api.setMessageReaction("??😶", event.messageID, (err) => {}, true)
 						}else{
 							if(x.startsWith(prefix)){
 								if(x.startsWith(prefix + "motivate")){
@@ -641,6 +614,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 										if(x.includes("https://m.youtube.com") || x.includes("https://youtu.be") || x.includes("https://youtube.com") || x.includes("https://www.youtube.com")){
 											let s = dl(d[1])
 											musics = false
+											api.setMessageReaction("🔎", event.senderID, (e) => {}, true)
 											api.sendMessage("Please Wait...", event.threadID, event.messageID)
 											try{
 												s.then((response) => {
@@ -650,9 +624,9 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 														console.log("hi " + t_u)
 														let g_r = http.get(t_u[0], function(g_rs) {
 															g_rs.pipe(f)
-															console.log("On Proccess")
 															f.on("finish", function() {
-																api.sendMessage("Downloading success, please wait", event.threadID, event.messageID)
+																api.setMessageReaction("⏳", event.senderID, (e) => {}, true)
+																//api.sendMessage("Downloading success, please wait", event.threadID, event.messageID)
 																api.sendMessage({
 																	body: "Here's your file\nTitle: " + response[1] + "\nUploaded by: " + response[2] ,
 																	attachment: fs.createReadStream(`${__dirname}/song.mp3`).on("end", async () => {
@@ -681,7 +655,8 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 												console.log(err)
 											}
 										}else{
-											api.sendMessage("Please Wait", event.threadID, event.messageID)
+											api.setMessageReaction("??🔎", event.senderID, (e) => {}, true)
+											//api.sendMessage("Please Wait", event.threadID, event.messageID)
 											try{
 												musics = false
 												d.shift()
@@ -702,7 +677,8 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 													quality: "lowest"
 												})
 												const info = await ytdl.getInfo(url)
-												api.sendMessage("A moment please", event.threadID, event.messageID)
+												api.setMessageReaction("⏳", event.senderID, (e) => {}, true)
+												//api.sendMessage("A moment please", event.threadID, event.messageID)
 												if(m.content[0].duration <= ((20 * 60) * 1000)){
 													ffmpegs(strm).audioBitrate(96).save(`${__dirname}/song.mp3`).on("end", async () => {
 														api.sendMessage({
@@ -888,10 +864,12 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 								}
 							}else{
 								for(let z = 0; z < y.length; z++){
-									if(!selves.includes(event.senderID) && (y[z] == "haha" || y[z] == "hahaha" || x.includes("hahahaha"))){
-										api.setMessageReaction("🤣", event.messageID, (err) => {}, true)
-									}else if(!selves.includes(event.senderID) && x.includes("masaya")){
-										api.setMessageReaction("😃", event.messageID, (err) => {}, true)
+									if(y[z] == "masaket" || y[z] == "peyn" || y[z] == "ouch" || y[z] == "awts" || y[z] == "ansaket" || y[z] == "ansakit" || y[z] == "masakit" || y[z] == "pain" || y[z] == "pighati"){
+										api.setMessageReaction("😥", event.mesaageID, () => {}, true)
+										api.sendMessage({
+											body: "Kawawa naman",
+											attachment: fs.createReadStream(__dirname + "/edamage.jpg")
+										}, event.threadID, event.mesaageID)
 									}else if(!selves.includes(event.senderID) && (y[z] == "kain" && (!x.includes("ka na") || !x.includes("kana")))){
 										api.getUserInfo(event.senderID, (err, data) => {
 											if(err){
@@ -936,12 +914,6 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 										})
 									}else if(x.includes("maganda ba ako") || x.includes("maganda ba ko")){
 										api.sendMessage("Ewan, isa lang naman akong di hamak na bot na walang ambag sa lipunan", event.threadID, event.messageID)
-									}else if(x.includes("masaket") || x.includes("peyn") || x.includes("ouch") || x.includes("awts") || x.includes("sakit") || x.includes("pain") || x.includes("pighati")){
-										api.setMessageReaction("😥", event.mesaageID, () => {}, true)
-										api.sendMessage({
-											body: "Kawawa naman",
-											attachment: fs.createReadStream(__dirname + "/edamage.jpg")
-										}, event.threadID, event.mesaageID)
 									}else if(!selves.includes(event.senderID) && (x.includes("cute") || x.includes("kyot")) && !x.includes("execute")){
 										if(x.includes("april")){
 											api.sendMessage({
