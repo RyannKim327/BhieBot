@@ -614,7 +614,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 										if(x.includes("https://m.youtube.com") || x.includes("https://youtu.be") || x.includes("https://youtube.com") || x.includes("https://www.youtube.com")){
 											let s = dl(d[1])
 											musics = false
-											api.setMessageReaction("🔎", event.senderID, (e) => {}, true)
+											api.setMessageReaction("💞", event.senderID, (e) => {}, true)
 											api.sendMessage("Please Wait...", event.threadID, event.messageID)
 											try{
 												s.then((response) => {
@@ -625,7 +625,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 														let g_r = http.get(t_u[0], function(g_rs) {
 															g_rs.pipe(f)
 															f.on("finish", function() {
-																api.setMessageReaction("⏳", event.senderID, (e) => {}, true)
+																api.setMessageReaction("👍", event.senderID, (e) => {}, true)
 																//api.sendMessage("Downloading success, please wait", event.threadID, event.messageID)
 																api.sendMessage({
 																	body: "Here's your file\nTitle: " + response[1] + "\nUploaded by: " + response[2] ,
@@ -655,7 +655,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 												console.log(err)
 											}
 										}else{
-											api.setMessageReaction("??🔎", event.senderID, (e) => {}, true)
+											api.setMessageReaction("💞", event.senderID, (e) => {}, true)
 											//api.sendMessage("Please Wait", event.threadID, event.messageID)
 											try{
 												musics = false
@@ -677,7 +677,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 													quality: "lowest"
 												})
 												const info = await ytdl.getInfo(url)
-												api.setMessageReaction("⏳", event.senderID, (e) => {}, true)
+												api.setMessageReaction("👍", event.senderID, (e) => {}, true)
 												//api.sendMessage("A moment please", event.threadID, event.messageID)
 												if(m.content[0].duration <= ((20 * 60) * 1000)){
 													ffmpegs(strm).audioBitrate(96).save(`${__dirname}/song.mp3`).on("end", async () => {
