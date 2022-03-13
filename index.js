@@ -586,7 +586,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 												}else{
 													let name = data[y[1]]
 													let info = "Name: " + name.name + "\n"
-													if(name.vanity !y undefined){
+													if(name.vanity != y undefined){
 														info += "Username: " + name.vanity + "\n"
 													}
 													switch(name.gender){
@@ -614,7 +614,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 														}else{
 															let name = data[y[1]]
 															let info = "Name: " + name.name + "\n"
-															if(name.vanity !y undefined){
+															if(name.vanity != y undefined){
 																info += "Username: " + name.vanity + "\n"
 															}
 															switch(name.gender){
