@@ -948,7 +948,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 												body: "Oo ang cute ni April, lalo na dito",
 												attachment: fs.createReadStream(__dirname + "/april.jpg")
 											}, event.threadID, event.messageID)
-										}else if(cute.includes(event.senderID) && x.includes("ako")){
+										}else if(cute.includes(event.senderID) && (x.includes("ako") || x.includes("ko"))){
 											api.sendMessage({
 												body: "Oo, ang cute mo dito.",
 												attachment: fs.createReadStream(__dirname + "/april.jpg")
@@ -1139,7 +1139,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 								body: "Oo ang cute ni April, lalo na dito",
 								attachment: fs.createReadStream(__dirname + "/april.jpg")
 							}, event.threadID, event.messageID)
-						}else if(cute.includes(event.senderID) && x.includes("ako")){
+						}else if(cute.includes(event.senderID) && (x.includes("ako") || x.includes("ko"))){
 							api.sendMessage({
 								body: "Oo, ang cute mo dito.",
 								attachment: fs.createReadStream(__dirname + "/april.jpg")
