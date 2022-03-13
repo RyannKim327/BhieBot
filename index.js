@@ -248,9 +248,9 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 		api.markAsReadAll((err) => {
 			console.log(err)
 		})
-		if(event.body != undefined){
+		/*if(event.body != undefined){
 			words(event.body)
-		}
+		}*/
 		switch(event.type){
 			case "message":
 				if(event.body != null){
