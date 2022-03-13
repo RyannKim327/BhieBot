@@ -576,7 +576,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 										})
 									}
 								}else if(x.startsWith(prefix + "info")){
-									if(y.length > 1){
+									if(y.length <= 1){
 										api.sendMessage(fs.readFileSync("abt.txt", "utf-8"), event.threadID, event.messageID)
 									}else{
 										if(isNaN(y[1])){
