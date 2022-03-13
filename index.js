@@ -314,13 +314,13 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 							for (let i = 0; i < mm.length - 1; i++) {
 								api.sendMessage(mm[i], event.threadID)
 							}*/
-							api.getThreadList(10, null, ["INBOX"], (err, data) => {
+							api.getThreadList(20, null, ["INBOX"], (err, data) => {
 								//console.log(data)
 								if(err){
 									console.log(err)
 								}else{
 									for(let i = 0; i < data.length; i++){
-										api.sendMessage(`Thread ID ${data[i].threadID}\nThread Name: ${data[i].name}`, gc)
+										api.sendMessage(`Thread ID ${data[i].threadID}\nThread Name: ${data[i].name}\nIs Group: ${data[i].isGroup}`, gc)
 									}
 								}
 							})
@@ -519,7 +519,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 							threads = threads.replace(l[2] + "/", "")
 							fs.writeFileSync("thread.txt", threads, "utf-8")
 							api.sendMessage("Unlocked thread ID: " + l[2], event.threadID, event.messageID)
-						}else if(mess.startsWith("~Bot: Wake-up") && threads.includes(event.threadID)){
+						}/*else if(mess.startsWith("~Bot: Wake-up") && threads.includes(event.threadID)){
 							threads = threads.replace(event.threadID + "/", "")
 							fs.writeFileSync("thread.txt", threads, "utf-8")
 							api.getThreadInfo(event.threadID, (err, data) => {
@@ -530,13 +530,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 								}
 							})
 							api.sendMessage("Good Day guys", event.threadID)
-						}else if(mess.startsWith("~Bad:")){
-							bad(y[1]).then((r) => {
-								api.sendMessage(r.result, event.threadID, event.messageID)
-							}).catch((e) => {
-								api.sendMessage(e, event.threadID, event.messageID)
-							})
-						}
+						}*/
 					}
 					if(onBot && !x.includes(separator) && !b_users.includes(event.senderID) && !(threads.includes(event.threadID))){
 						if(f(x)){
@@ -582,7 +576,65 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 										})
 									}
 								}else if(x.startsWith(prefix + "info")){
-									api.sendMessage(fs.readFileSync("abt.txt", "utf-8"), event.threadID, event.messageID)
+									if(y.length > 1){
+										api.sendMessage(fs.readFileSync("abt.txt", "utf-8"), event.threadID, event.messageID)
+									}else{
+										if(isNaN(y[1])){
+											api.getUserInfo(y[1], (err, data) => {
+												if(err){
+													console.log(err)
+												}else{
+													let name = data[y[1]]
+													let info = "Name: " + name.name + "\n"
+													if(name.vanity !y undefined){
+														info += "Username: " + name.vanity + "\n"
+													}
+													switch(name.gender){
+														case 1:
+															info += "Gender: Female"
+														break
+														case 2:
+															info += "Gender: Male"
+														break
+														default:
+															info += "Gender: Custom"
+													}
+													info += "Profile Url: " + name.profileUrl
+													api.sendMessage(info, event.threadID, event.messageID)
+												}
+											})
+										}else{
+											api.getUserID(y[1], (err, data) => {
+												if(err){
+													console.log(err)
+												}else{
+													api.getUserInfo(y[1], (err, data) => {
+														if(err){
+															console.log(err)
+														}else{
+															let name = data[y[1]]
+															let info = "Name: " + name.name + "\n"
+															if(name.vanity !y undefined){
+																info += "Username: " + name.vanity + "\n"
+															}
+															switch(name.gender){
+																case 1:
+																	info += "Gender: Female"
+																break
+																case 2:
+																	info += "Gender: Male"
+																break
+																default:
+																	info += "Gender: Custom"
+															}
+															info += "Profile Url: " + name.profileUrl
+															api.sendMessage(info, event.threadID, event.messageID)
+														}
+													})
+												}
+											})
+										}
+									}
 								}else if(x.startsWith(prefix + "music")){
 									if(musics){
 										let d = mess.split(" ")
