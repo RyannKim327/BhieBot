@@ -315,11 +315,12 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 								api.sendMessage(mm[i], event.threadID)
 							}*/
 							api.getThreadList(10, null, ["INBOX"], (err, data) => {
-								if(err){
+								console.log(data)
+								/*if(err){
 									console.log(err)
 								}else{
 									api.sendMessage(`Thread ID ${data.threadID}\nThread Name: ${data.name}`, gc)
-								}
+								}*/
 							})
 						}else if(x.startsWith("_off_")){
 							let mm = fs.readFileSync("thread.txt", "utf-8").split("/")
