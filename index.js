@@ -234,11 +234,11 @@ async function bad(x){
 login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 	if(err)  return console.error(err)
 	if(bhiebot){
-		bhie(1).then((r) => {
+		/*bhie(1).then((r) => {
 			api.sendMessage(r.data, gc)
 		}).catch((e) => {
 			api.sendMessage(e, gc)
-		})
+		})*/
 		api.sendMessage("BhieBot is now active", gc)
 		bhiebot = false
 	}
