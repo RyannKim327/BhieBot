@@ -309,6 +309,20 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 									}
 								})
 							}
+						}else if(x.startsWith(prefix + "base64")){
+							let data = x.split(" ")
+							data.shift()
+							if(data[0] == "encode"){
+								data.shift()
+								let txt = data.join(" ")
+								api.sendMessage(atob(txt), event.threadID, event.messageID)
+							}else if(data[0] == "decode"){
+								data.shift()
+								let txt = data.join(" ")
+								api.sendMessage(btoa(txt), event.threadID, event.messageID)
+							}else{
+								api.sendMessage("Invalid Command", event.threadID, event.messageID)
+							}
 						}else if(x.startsWith(prefix) && x.includes(separator)){
 							let m = mess.split(separator)
 							let c = m[0].split(" ")
@@ -326,20 +340,6 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 									})
 								}
 								api.sendMessage("Sent",event.threadID)
-							}else if(x.startsWith(prefix + "base64")){
-								let data = x.split(" ")
-								data.shift()
-								if(data[0] == "encode"){
-									data.shift()
-									let txt = data.join(" ")
-									api.sendMessage(atob(txt), event.threadID, event.messageID)
-								}else if(data[0] == "decode"){
-									data.shift()
-									let txt = data.join(" ")
-									api.sendMessage(btoa(txt), event.threadID, event.messageID)
-								}else{
-									api.sendMessage("Invalid Command", event.threadID, event.messageID)
-								}
 							}else if(x.startsWith(prefix + "music")){
 								let data = m[0].split(" ")
 								console.log(data)
@@ -567,7 +567,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 									if(y.length <= 1){
 										api.sendMessage(fs.readFileSync("abt.txt", "utf-8"), event.threadID, event.messageID)
 									}else{
-										if(isNaN(y[1])){
+										if(!isNaN(y[1])){
 											api.getUserInfo(y[1], (err, data) => {
 												if(err){
 													console.log(err)
@@ -591,6 +591,8 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 													api.sendMessage(info, event.threadID, event.messageID)
 												}
 											})
+										}else if(event.mentions.length > 0){
+											api.sendMessage("hi", gc)
 										}else{
 											api.getUserID(y[1], (err, data) => {
 												if(err){
