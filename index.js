@@ -569,7 +569,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 									}else{
 										y.shift()
 										let z = y.join(" ")
-										console.log(event.mentions[0].id)
+										//console.log(event.mentions.id)
 										if(typeof z != "number"){
 											api.getUserInfo(z, (err, data) => {
 												if(err){
