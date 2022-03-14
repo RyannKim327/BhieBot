@@ -522,7 +522,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 					}
 					if(onBot && !x.includes(separator) && !b_users.includes(event.senderID) && !(threads.includes(event.threadID))){
 						if(f(x)){
-							api.setMessageReaction("??😶", event.messageID, (err) => {}, true)
+							api.setMessageReaction("😶", event.messageID, (err) => {}, true)
 						}else{
 							if(x.startsWith(prefix)){
 								if(x.startsWith(prefix + "motivate")){
@@ -569,13 +569,13 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 									}else{
 										y.shift()
 										let z = y.join(" ")
-										console.log(event)
-										if(typeof z === "number"){
-											api.getUserInfo(y[1], (err, data) => {
+										console.log(event.mentions.id)
+										if(typeof z == "number"){
+											api.getUserInfo(z, (err, data) => {
 												if(err){
 													console.log(err)
 												}else{
-													let name = data[y[1]]
+													let name = data[z]
 													let info = "Name: " + name.name + "\n"
 													if(name.vanity != undefined){
 														info += "Username: " + name.vanity + "\n"
@@ -590,7 +590,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 														default:
 															info += "Gender: Custom"
 													}
-													info += "Profile Url: " + name.profileUrl
+													info += "\nProfile Url: " + name.profileUrl
 													api.sendMessage(info, event.threadID, event.messageID)
 												}
 											})
@@ -601,11 +601,12 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 												if(err){
 													console.log(err)
 												}else{
-													api.getUserInfo(y[1], (err, data) => {
+													let ID = data[ID]
+													api.getUserInfo(data.userID, (err, data) => {
 														if(err){
 															console.log(err)
 														}else{
-															let name = data[y[1]]
+															let name = data[ID]
 															let info = "Name: " + name.name + "\n"
 															if(name.vanity != undefined){
 																info += "Username: " + name.vanity + "\n"
@@ -620,7 +621,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 																default:
 																	info += "Gender: Custom"
 															}
-															info += "Profile Url: " + name.profileUrl
+															info += "\nProfile Url: " + name.profileUrl
 															api.sendMessage(info, event.threadID, event.messageID)
 														}
 													})
