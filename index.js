@@ -245,7 +245,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 				console.log(err)
 			}
 		})
-		api.handleMessageRequests(
+		//api.handleMessageRequests(
 		switch(event.type){
 			case "message":
 				if(event.body != null){
