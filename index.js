@@ -245,6 +245,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 				console.log(err)
 			}
 		})
+		api.handleMessageRequests(
 		switch(event.type){
 			case "message":
 				if(event.body != null){
@@ -325,6 +326,20 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 									})
 								}
 								api.sendMessage("Sent",event.threadID)
+							}else if(x.startsWith(prefix + "base64")){
+								let data = x.split(" ")
+								data.shift()
+								if(data[0] == "encode"){
+									data.shift()
+									let txt = data.join(" ")
+									api.sendMessage(atob(txt), event.threadID, event.messageID)
+								}else if(data[0] == "decode"){
+									data.shift()
+									let txt = data.join(" ")
+									api.sendMessage(btoa(txt), event.threadID, event.messageID)
+								}else{
+									api.sendMessage("Invalid Command", event.threadID, event.messageID)
+								}
 							}else if(x.startsWith(prefix + "music")){
 								let data = m[0].split(" ")
 								console.log(data)
@@ -654,7 +669,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 												console.log(err)
 											}
 										}else{
-											api.setMessageReaction("??🔎", event.messageID, (e) => {}, true)
+											api.setMessageReaction("🔎", event.messageID, (e) => {}, true)
 											//api.sendMessage("Please Wait", event.threadID, event.messageID)
 											try{
 												musics = false
@@ -676,10 +691,10 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 													quality: "lowest"
 												})
 												const info = await ytdl.getInfo(url)
-												api.setMessageReaction("⏳", event.messageID, (e) => {}, true)
 												//api.sendMessage("A moment please", event.threadID, event.messageID)
 												if(m.content[0].duration <= ((20 * 60) * 1000)){
 													ffmpegs(strm).audioBitrate(96).save(`${__dirname}/song.mp3`).on("end", async () => {
+														api.setMessageReaction("⏳", event.messageID, (e) => {}, true)
 														api.sendMessage({
 															body: "Here is your request\n\nSong Title: " + info.videoDetails.title + "\nUploaded by: " + info.videoDetails.author.name,
 															attachment: fs.createReadStream(`${__dirname}/song.mp3`).on("end", async () => {
