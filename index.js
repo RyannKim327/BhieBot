@@ -567,7 +567,10 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 									if(y.length <= 1){
 										api.sendMessage(fs.readFileSync("abt.txt", "utf-8"), event.threadID, event.messageID)
 									}else{
-										if(typeof y[1] === "number"){
+										y.shift()
+										let z = y.join(" ")
+										console.log(event)
+										if(typeof z === "number"){
 											api.getUserInfo(y[1], (err, data) => {
 												if(err){
 													console.log(err)
@@ -594,7 +597,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 										}else if(event.mentions.length > 0){
 											api.sendMessage("hi", gc)
 										}else{
-											api.getUserID(y[1], (err, data) => {
+											api.getUserID(z, (err, data) => {
 												if(err){
 													console.log(err)
 												}else{
