@@ -570,7 +570,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 										y.shift()
 										let z = y.join(" ")
 										//console.log(event.mentions.id)
-										if(typeof z != "number"){
+										if(typeof z === "number"){
 											api.getUserInfo(z, (err, data) => {
 												if(err){
 													console.log(err)
@@ -593,15 +593,15 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 													info += "\nProfile Url: " + name.profileUrl
 													api.sendMessage(info, event.threadID, event.messageID)
 												}
-											})
+											})/*
 										}else if(event.mentions.length > 0){
-											api.sendMessage("hi", gc)
+											api.sendMessage("hi", gc)*/
 										}else{
 											api.getUserID(z, (err, data) => {
 												if(err){
 													console.log(err)
 												}else{
-													let ID = data[ID]
+													let ID = data.userID
 													api.getUserInfo(data.userID, (err, data) => {
 														if(err){
 															console.log(err)
