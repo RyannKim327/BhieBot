@@ -570,7 +570,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 										y.shift()
 										let z = y.join(" ")
 										//console.log(event.mentions.id)
-										if(typeof z === "number"){
+										if(typeof z == "number"){
 											api.getUserInfo(z, (err, data) => {
 												if(err){
 													console.log(err)
