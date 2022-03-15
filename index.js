@@ -567,8 +567,10 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 									if(y.length <= 1){
 										api.sendMessage(fs.readFileSync("abt.txt", "utf-8"), event.threadID, event.messageID)
 									}else{
-										y.shift()
+										let sp = mess.split(" ")
+										sp.shift()
 										let z = y.join(" ")
+										console.log("911")
 										console.log(event.mentions['id'])
 										if(!isNaN(z)){
 											api.getUserInfo(z, (err, data) => {
