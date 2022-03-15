@@ -805,13 +805,11 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 											if((i > 0 && (i % 25) == 0) || i <= response.length - 1){
 												api.sendMessage(q, event.threadID, event.messageID)
 												q = ""
-											}else{
-												console.log("Hshdhdjdjd")
 											}
 										}
 										
 									}).catch((err) => {
-										console.log(err)
+										console.log("Error 112: ." + err)
 									})
 								}else if(x.startsWith(prefix + "whatis")){
 									let w = x.split(" ")
