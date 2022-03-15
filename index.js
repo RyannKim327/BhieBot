@@ -562,7 +562,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 												}else{
 													const name = data[event.senderID]
 													api.sendMessage({
-														body: `A quotation for you my dear @${name.firstName}\nFrom: ${response.quote_author}\n~ ${response.qoute_body}`,
+														body: `A quotation for you my dear @${name.firstName}\nFrom: ${response.quote_author}\n~ ${response.quote_body}`,
 														mentions: [{
 															tag: `@${name.firstName}`,
 															id: event.senderID
