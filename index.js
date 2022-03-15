@@ -571,7 +571,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 										sp.shift()
 										let z = y.join(" ")
 										console.log("911")
-										console.log(event.mentions['id'])
+										console.log(event.mentions[0])
 										if(!isNaN(z)){
 											api.getUserInfo(z, (err, data) => {
 												if(err){
@@ -801,9 +801,13 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 									v.then((response) => {
 										let q = ""
 										for(let i = 0; i < response.length; i++){
-											q += "From the book of " + response[i].bookname + " chapter " + response[i].chapter + " verse " + response[i].verse + "\n" + response[i].text + "\n"
+											q += "[ " + response[i].bookname + " " + response[i].chapter + ":" + response[i].verse + "\n" + response[i].text + "\n\n"
+											if((i % 25) == 0 || i <= reponse.length - 1){
+												api.sendMessage(q, event.threadID, event.messageID)
+												q = ""
+											}
 										}
-										api.sendMessage(q, event.threadID, event.messageID)
+										
 									}).catch((err) => {
 										console.log(err)
 									})
