@@ -811,7 +811,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 									v.then((response) => {
 										let q = ""
 										let total = response.length
-										let i = 0
+										/*let i = 0
 										while(i <= total){
 											if((i > 0 && (i % 25) == 0) || i >= total){
 												api.sendMessage(q, event.threadID, event.messageID)
@@ -821,15 +821,15 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 												q += "[ " + response[i].bookname + " " + response[i].chapter + ":" + response[i].verse + " ]\n" + response[i].text + "\n\n"
 												i++
 											}
-										}/*
-										for(let i = 0; i < response.length; i++){
+										}*/
+										for(let i = 0; i <= total; i++){
 											q += "[ " + response[i].bookname + " " + response[i].chapter + ":" + response[i].verse + " ]\n" + response[i].text + "\n\n"
-											if((i > 0 && (i % 25) == 0) || i <= response.length - 1){
+											if((i > 0 && (i % 25) == 0) || i >= total){
 												api.sendMessage(q, event.threadID, event.messageID)
-												//q = ""
+												q = ""
 											}
 										}
-										*/
+										
 									}).catch((err) => {
 										console.log("Error 112: ." + err)
 									})
