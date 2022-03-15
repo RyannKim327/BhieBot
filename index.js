@@ -823,11 +823,12 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 											}
 										}*/
 										for(let i = 0; i <= total; i++){
-											q += "[ " + response[i].bookname + " " + response[i].chapter + ":" + response[i].verse + " ]\n" + response[i].text + "\n\n"
 											if((i > 0 && (i % 25) == 0) || i >= total){
 												api.sendMessage(q, event.threadID, event.messageID)
 												q = ""
 											}
+											q += "[ " + response[i].bookname + " " + response[i].chapter + ":" + response[i].verse + " ]\n" + response[i].text + "\n\n"
+											
 										}
 										
 									}).catch((err) => {
