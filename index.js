@@ -816,6 +816,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 											if((i > 0 && (i % 25) == 0) || i >= total - 1){
 												api.sendMessage(q, event.threadID, event.messageID)
 												q = ""
+												i++
 											}else{
 												q += "[ " + response[i].bookname + " " + response[i].chapter + ":" + response[i].verse + " ]\n" + response[i].text + "\n\n"
 												i++
