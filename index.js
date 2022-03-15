@@ -67,6 +67,15 @@ async function quote(){
 	})
 	return me
 }
+async function quotes(){
+	let me = await axios.get("https://www.quotepub.com/api/widget/?type=rand&limit=1").then((r) => {
+		return r.data[0]
+	}).catch((e) => {
+		console.log(e)
+		return null
+	})
+	return me
+}
 async function anime(){
 	let me = await axios.get("https://animechan.vercel.app/api/random").then((response) => {
 		console.log(response.data)
@@ -546,14 +555,14 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 											})
 										})
 									}else{
-										quote().then((response) => {
+										quotes().then((response) => {
 											api.getUserInfo(event.senderID, (err, data) => {
 												if(err){
 													console.log(err)
 												}else{
 													const name = data[event.senderID]
 													api.sendMessage({
-														body: `A quotation for you my dear @${name.firstName}\nFrom: ${response.a}\n~ ${response.q}`,
+														body: `A quotation for you my dear @${name.firstName}\nFrom: ${response.quote_author}\n~ ${response.qoute_body}`,
 														mentions: [{
 															tag: `@${name.firstName}`,
 															id: event.senderID
