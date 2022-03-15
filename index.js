@@ -242,6 +242,7 @@ async function bad(x){
 }
 login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 	if(err)  return console.error(err)
+	const myself = api.getCurrentUserID()
 	if(bhiebot){
 		api.sendMessage("BhieBot is now active", gc)
 		bhiebot = false
@@ -580,7 +581,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 										sp.shift()
 										let z = y.join(" ")
 										console.log("911")
-										console.log(event.mentions[0])
+										console.log(event.mentions.data)
 										if(!isNaN(z)){
 											api.getUserInfo(z, (err, data) => {
 												if(err){
@@ -809,6 +810,17 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 									let v = verse(w)
 									v.then((response) => {
 										let q = ""
+										let total = response.length
+										let i = 0
+										while(i < total){
+											if((i > 0 && (i % 25) == 0) || i >= total - 1){
+												api.sendMessage(q, event.threadID, event.messageID)
+												q = ""
+											}else{
+												q += "[ " + response[i].bookname + " " + response[i].chapter + ":" + response[i].verse + " ]\n" + response[i].text + "\n\n"
+												i++
+											}
+										}/*
 										for(let i = 0; i < response.length; i++){
 											q += "[ " + response[i].bookname + " " + response[i].chapter + ":" + response[i].verse + " ]\n" + response[i].text + "\n\n"
 											if((i > 0 && (i % 25) == 0) || i <= response.length - 1){
@@ -816,7 +828,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 												//q = ""
 											}
 										}
-										
+										*/
 									}).catch((err) => {
 										console.log("Error 112: ." + err)
 									})
@@ -899,7 +911,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 								}
 							}else{
 								for(let z = 0; z < y.length; z++){
-									if(y[z] == "masaket" || y[z] == "peyn" || y[z] == "ouch" || y[z] == "awts" || y[z] == "ansaket" || y[z] == "ansakit" || y[z] == "masakit" || y[z] == "pain" || y[z] == "pighati"){
+									if(myself != event.senderID && (y[z] == "masaket" || y[z] == "peyn" || y[z] == "ouch" || y[z] == "awts" || y[z] == "ansaket" || y[z] == "ansakit" || y[z] == "masakit" || y[z] == "pain" || y[z] == "pighati")){
 										api.setMessageReaction("😥", event.mesaageID, () => {}, true)
 										api.sendMessage({
 											body: "Kawawa naman",
@@ -1109,7 +1121,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 						api.sendMessage("(2)", event.threadID, event.messageID)
 					}else if(!selves.includes(event.senderID) && x.includes("(2)") && vip.includes(event.senderID)){
 						api.sendMessage("(3)", event.threadID, event.messageID)
-					}else if(x.includes("masaket") || x.includes("peyn") || x.includes("ouch") || x.includes("awts") || x.includes("sakit") || x.includes("pain") || x.includes("pighati")){
+					}else if(myself != event.senderID && (x.includes("masaket") || x.includes("peyn") || x.includes("ouch") || x.includes("awts") || x.includes("sakit") || x.includes("pain") || x.includes("pighati"))){
 						api.setMessageReaction("😥", event.mesaageID, () => {}, true)
 						api.sendMessage({
 								body: "Kawawa naman",
