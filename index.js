@@ -1,4 +1,4 @@
-const fs = require("fs")
+ const fs = require("fs")
 const { keep_alive } = require("./keep_alive.js");
 const request = require("request")
 const http = require("https")
@@ -569,8 +569,8 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 									}else{
 										y.shift()
 										let z = y.join(" ")
-										//console.log(event.mentions.id)
-										if(typeof z == "number"){
+										console.log(event.mentions['id'])
+										if(!isNaN(z)){
 											api.getUserInfo(z, (err, data) => {
 												if(err){
 													console.log(err)
