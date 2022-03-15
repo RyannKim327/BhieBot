@@ -812,8 +812,8 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 										let q = ""
 										let total = response.length
 										let i = 0
-										while(i < total){
-											if((i > 0 && (i % 25) == 0) || i >= total - 1){
+										while(i <= total){
+											if((i > 0 && (i % 25) == 0) || i >= total){
 												api.sendMessage(q, event.threadID, event.messageID)
 												q = ""
 												i++
