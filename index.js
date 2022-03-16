@@ -268,7 +268,7 @@ const empty = (str, condition) => {
 			}
 		}
 	}else{
-		let s = tstrsplit(" ")
+		let s = str.split(" ")
 		for(let i = 0; i < s.length; i++){
 			for(let j = 0; j < m.length; j++){
 				if(s[i] == m[j]){
