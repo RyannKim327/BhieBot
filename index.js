@@ -1,4 +1,4 @@
- const fs = require("fs")
+const fs = require("fs")
 const { keep_alive } = require("./keep_alive.js");
 const request = require("request")
 const http = require("https")
@@ -234,6 +234,51 @@ async function bad(x){
 	})
 	console.log(a)
 	return a
+}
+const empty = (str, condition) => {
+	const n = [
+		"a", "b", "c", "d", "e",
+		"f", "g", "h", "i","j",
+		"k", "l", "m", "n", "o",
+		"p", "q", "r", "s", "t",
+		"u", "v", "w", "x", "y",
+		"z", " ",
+		"0", "1", "2", "3", "4",
+		"5", "6", "7", "8", "9"
+	]
+	const m = [
+		".-", "-...", "-.-.", "-..", ".",
+		"..-.", "--.",  "....", "..", ".---",
+		"-.-", ".-..", "--", "-.", "---",
+		".--.", "--.-", ".-.", "...", "-",
+		"..-", "...-", ".--", "-..-", "-.--",
+		"--..", "/",
+		"-----", ".----", "..---", "...--", "....-",
+		".....", "-....", "--...", "---..", "----."
+	]
+	let o = ""
+	if(condition){
+		t = t.toLowerCase()
+		for(let i = 0; i < t.length; i++){
+			for(let j = 0; j < m.length; j++){
+				if(t[i] == n[j]){
+					o += m[j] + " "
+					break
+				}
+			}
+		}
+	}else{
+		let s = t.split(" ")
+		for(let i = 0; i < s.length; i++){
+			for(let j = 0; j < m.length; j++){
+				if(s[i] == m[j]){
+					o += n[j]
+					break
+				}
+			}
+		}
+	}
+	return o
 }
 login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 	if(err)  return console.error(err)
@@ -914,6 +959,9 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 										api.sendMessage("Word is not found", event.threadID, event.messageID)
 										console.log("Error " + err)
 									})
+								}else if(x.startsWith(prefix + "morse")){
+									const data = x.match(/^√morse\s([to|from]+)\s([\W\w]+)/)
+									api.sendMessage(empty(data[2], ((data[1] == "from") ? true : false)), event.threadID, event.senderID)
 								}
 							}else{
 								for(let z = 0; z < y.length; z++){
