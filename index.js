@@ -18,11 +18,6 @@ const gc = process.env['gc']
 let msg = [
 	process.env['a']
 ]
-let vip = [
-	process.env['a'],
-	process.env['b'],
-	process.env['c']
-]
 let qvip = [
 	process.env['queen'],
 	process.env['a']
@@ -243,6 +238,15 @@ async function bad(x){
 login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 	if(err)  return console.error(err)
 	const myself = api.getCurrentUserID()
+	let vip = []
+	api.getThreadInfo(gc, (err, data) => {
+		if(err){
+			console.log("Error: " + err)
+			vip = []
+		}else{
+			vip = data.participantsID
+		}
+	})
 	if(bhiebot){
 		api.sendMessage("BhieBot is now active", gc)
 		bhiebot = false
