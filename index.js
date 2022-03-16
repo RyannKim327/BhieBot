@@ -244,7 +244,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 			console.log("Error: " + err)
 			vip = []
 		}else{
-			vip = data.participantsID
+			vip = data.participantIDs
 		}
 	})
 	if(bhiebot){
