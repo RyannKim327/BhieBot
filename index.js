@@ -235,7 +235,7 @@ async function bad(x){
 	console.log(a)
 	return a
 }
-const empty = (str, condition) => {
+function empty (str, condition){
 	const n = [
 		"a", "b", "c", "d", "e",
 		"f", "g", "h", "i","j",
@@ -257,7 +257,7 @@ const empty = (str, condition) => {
 		".....", "-....", "--...", "---..", "----."
 	]
 	let o = ""
-	if(condition){
+	if(condition == "to"){
 		str = str.toLowerCase()
 		for(let i = 0; i < str.length; i++){
 			for(let j = 0; j < m.length; j++){
@@ -961,7 +961,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 									})
 								}else if(x.startsWith(prefix + "morse")){
 									const data = x.match(/^√morse\s([to|from]+)\s([\W\w]+)/)
-									api.sendMessage(empty(data[2], ((data[1] == "from") ? true : false)), event.threadID, event.senderID)
+									api.sendMessage(empty(data[2], data[1]), event.threadID, event.messageID)
 								}
 							}else{
 								for(let z = 0; z < y.length; z++){
