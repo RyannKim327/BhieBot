@@ -258,8 +258,8 @@ const empty = (str, condition) => {
 	]
 	let o = ""
 	if(condition){
-		t = t.toLowerCase()
-		for(let i = 0; i < t.length; i++){
+		str = str.toLowerCase()
+		for(let i = 0; i < str.length; i++){
 			for(let j = 0; j < m.length; j++){
 				if(t[i] == n[j]){
 					o += m[j] + " "
@@ -268,7 +268,7 @@ const empty = (str, condition) => {
 			}
 		}
 	}else{
-		let s = t.split(" ")
+		let s = tstrsplit(" ")
 		for(let i = 0; i < s.length; i++){
 			for(let j = 0; j < m.length; j++){
 				if(s[i] == m[j]){
