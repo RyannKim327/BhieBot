@@ -261,7 +261,7 @@ const empty = (str, condition) => {
 		str = str.toLowerCase()
 		for(let i = 0; i < str.length; i++){
 			for(let j = 0; j < m.length; j++){
-				if(t[i] == n[j]){
+				if(str[i] == n[j]){
 					o += m[j] + " "
 					break
 				}
