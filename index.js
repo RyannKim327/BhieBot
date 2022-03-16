@@ -822,7 +822,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 												i++
 											}
 										}*/
-										for(let i = 0; i <= total; i++){
+										for(let i = 0; i < total; i++){
 											/*if((i > 0 && (i % 25) == 0) || i >= total){
 												api.sendMessage(q, event.threadID, event.messageID)
 												q = ""
