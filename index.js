@@ -1206,7 +1206,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 								api.sendMessage(message, event.threadID, event.messageID)
 							}
 						})
-					}else if(!selves.includes(event.senderID) && (x.includes("cute") || x.includes("kyot")) && !x.includes("execute")){
+					}else if(4699051006857054 != event.threadID && !selves.includes(event.senderID) && (x.includes("cute") || x.includes("kyot")) && !x.includes("execute")){
 						if(x.includes("april")){
 							api.sendMessage({
 								body: "Oo ang cute ni April, lalo na dito",
