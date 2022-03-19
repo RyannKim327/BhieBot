@@ -151,6 +151,14 @@ async function whatIs(x){
 	})
 	return o
 }
+async function qwak(q){
+	let result = await axios.get("https://api.duckduckgo.com/?q=" + q + "&format=json&pretty=1").then((response) => {
+		return response.data
+	}).catch((e) => {
+		console.log("Error: " + e)
+		return null
+	})
+}
 async function speech(x){
 	const r = {
 		input: {
@@ -199,6 +207,7 @@ function f(p) {
 		}
 	}
 	return false
+	//return /^([bobo|bobu|bubo]+)/.test(p)
 }
 function read(){
 	return fs.readFileSync("thread.txt", "utf-8")
@@ -581,7 +590,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 					}
 					if(onBot && !x.includes(separator) && !b_users.includes(event.senderID) && !(threads.includes(event.threadID))){
 						if(f(x)){
-							api.setMessageReaction("😶", event.messageID, (err) => {}, true)
+							api.setMessageReaction("🥲", event.messageID, (err) => {}, true)
 						}else{
 							if(x.startsWith(prefix)){
 								if(x.startsWith(prefix + "motivate")){
@@ -772,6 +781,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 																		}
 																	console.log("Done")
 																	musics = true
+																	api.setMessageReaction("✔", event.messageID, (err) => {}, true)
 																	})
 																}
 															})
@@ -962,7 +972,22 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 								}else if(x.startsWith(prefix + "morse")){
 									const data = x.match(/^√morse\s([to|from]+)\s([\W\w]+)/)
 									api.sendMessage(empty(data[2], data[1]), event.threadID, event.messageID)
-								}
+								}/*else if(x.startsWith(prefix + "know")){
+									let data = mess.split(" ")
+									data.shift()
+									let joins = data.join(" ")
+									qwak(joins).then((r) => {
+										let f = fs.createWriteStream("duck.jpg")
+										http.get(r.Image, (re) => {
+											re.pipe(f)
+											f.on("finish", () => {
+												api.sendMessage({
+													body: `You've searched about ${joins} `
+												}, event.threadID, event.messageID)
+											})
+										})
+									})
+								}*/
 							}else{
 								for(let z = 0; z < y.length; z++){
 									if(myself != event.senderID && (y[z] == "masaket" || y[z] == "peyn" || y[z] == "ouch" || y[z] == "awts" || y[z] == "ansaket" || y[z] == "ansakit" || y[z] == "masakit" || y[z] == "pain" || y[z] == "pighati")){
