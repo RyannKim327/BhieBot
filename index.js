@@ -910,7 +910,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 								}*/
 							}else{
 								for(let z = 0; z < y.length; z++){
-									if(myself != event.senderID && (y[z] == "masaket" || y[z] == "peyn" || y[z] == "ouch" || y[z] == "awts" || y[z] == "ansaket" || y[z] == "ansakit" || y[z] == "masakit" || y[z] == "pain" || y[z] == "pighati")){
+									if(selves != event.senderID && (y[z] == "masaket" || y[z] == "peyn" || y[z] == "ouch" || y[z] == "awts" || y[z] == "ansaket" || y[z] == "ansakit" || y[z] == "masakit" || y[z] == "pain" || y[z] == "pighati")){
 										api.setMessageReaction("😥", event.mesaageID, () => {}, true)
 										api.sendMessage({
 											body: "Kawawa naman",
@@ -1130,7 +1130,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 						api.sendMessage("(2)", event.threadID, event.messageID)
 					}else if(!selves.includes(event.senderID) && x.includes("(2)") && vip.includes(event.senderID)){
 						api.sendMessage("(3)", event.threadID, event.messageID)
-					}else if(myself != event.senderID && (x.includes("masaket") || x.includes("peyn") || x.includes("ouch") || x.includes("awts") || x.includes("sakit") || x.includes("pain") || x.includes("pighati"))){
+					}else if(selves != event.senderID && (x.includes("masaket") || x.includes("peyn") || x.includes("ouch") || x.includes("awts") || x.includes("sakit") || x.includes("pain") || x.includes("pighati"))){
 						api.setMessageReaction("😥", event.mesaageID, () => {}, true)
 						api.sendMessage({
 								body: "Kawawa naman",
