@@ -7,11 +7,9 @@ const login = require("fca-unofficial")
 const YoutubeMusicApi = require('youtube-music-api')
 const ytdl = require('ytdl-core');
 const ffmpeg = require('@ffmpeg-installer/ffmpeg')
-const tts = require("@google-cloud/text-to-speech")
 const ffmpegs = require('fluent-ffmpeg')
 ffmpegs.setFfmpegPath(ffmpeg.path)
 const yt = new YoutubeMusicApi()
-const client = new tts.TextToSpeechClient()
 const prefix = "√"
 const separator = "|"
 const gc = process.env['gc']
@@ -21,10 +19,6 @@ let msg = [
 let qvip = [
 	process.env['queen'],
 	process.env['a']
-]
-let selves = [
-	process.env['b'],
-	process.env['c']
 ]
 let cute = [
 	process.env['abril']
@@ -159,27 +153,6 @@ async function qwak(q){
 		return null
 	})
 }
-async function speech(x){
-	const r = {
-		input: {
-			text: x
-		},
-		voice: {
-			languageCode: 'en-US',
-			ssmlGender: 'NEUTRAL'
-		},
-		audioConfig: {
-			audioEncoding: 'MP3'
-		}
-	}
-	const o = await client.synthesizeSpeech(r).then((r) => {
-		return r.data
-	}).catch((e) => {
-		return e
-	})
-	console.log(o)
-	return o
-}
 function f(p) {
 	let g = [
 		"bobo",
@@ -207,42 +180,10 @@ function f(p) {
 		}
 	}
 	return false
-	//return /^([bobo|bobu|bubo]+)/.test(p)
+	//return /^([bobo|bobu|bubo|gaga|gagi|gago|gagu|kulangot|kwak|olol|olul|ulol|ulul|potaena|shit|putanginamo|potaenamo|putang\sina|putangina|pota|tanga|taena|tangina|yawa]+)/.test(p)
 }
 function read(){
 	return fs.readFileSync("thread.txt", "utf-8")
-}
-async function words(x){
-	let y = x.replace(/[^a-zA-Z\s]+/g, '')
-	let z = y.split(" ")
-	for(let c in z){
-		let a = await axios.get("http://bhiebot.xp3.biz/bot.php?action=words&data=" + z[c]).then((r) => {
-			return r.data
-		}).catch((e) => {
-			return e
-		})
-		console.log(a)
-	}
-}
-async function bhie(x){
-	let o = await axios.get("http://bhiebot.xp3.biz/ulan.php?ID=" + x). then((r) => {
-		return r.data
-	}).catch((e) => {
-		console.log(e)
-		return e
-	})
-	console.log("Data " + o)
-	return o
-}
-async function bad(x){
-	let y = x.replace(/[^a-zA-Z\s]+/g, '')
-	let a = await axios.get("http://bhiebot.xp3.biz/bot.php?action=bad&data=" + y).then((r) => {
-		return r.data
-	}).catch((e) => {
-		return e
-	})
-	console.log(a)
-	return a
 }
 function empty (str, condition){
 	const n = [
@@ -291,7 +232,7 @@ function empty (str, condition){
 }
 login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 	if(err)  return console.error(err)
-	const myself = api.getCurrentUserID()
+	const selves = api.getCurrentUserID()
 	let vip = []
 	api.getThreadInfo(gc, (err, data) => {
 		if(err){
@@ -345,15 +286,8 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 						night = ""
 					}
 					if(vip.includes(event.senderID) || gc.includes(event.threadID)){
-						if(x.startsWith("-say: ")){
-							let a = y
-							a.shift()
-							speech(a).then((r) => {
-								api.sendMessage(r, event.threadID)
-							})
-						}
 						if(x.startsWith("_admin_")){
-							api.sendMessage("Here are your commands:\n~Bot: Sleep\n~Bot: Wake-up\n~Bot: Off\n~Bot: On\n~Bot: Activate [ID]\n~Bot: Deactivate [ID]", event.threadID)
+							api.sendMessage("Here are your commands:\n~Bot: Sleep\n~Bot: Wake-up\n~Bot: Toggle\n~Off\n~On\n~Bot: Activate [ID]\n~Bot: Deactivate [ID]", event.threadID)
 						}else if(x.startsWith("_list_")){
 							api.getThreadList(20, null, ["INBOX"], (err, data) => {
 								if(err){
@@ -361,7 +295,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 								}else{
 									for(let i = 0; i < data.length; i++){
 										if(!vip.includes(data[i].threadID) && !gc.includes(data[i].threadID)){
-											api.sendMessage(`Thread ID ${data[i].threadID}\nThread Name: ${data[i].name}\nIs Group: ${data[i].isGroup}`, gc)
+											api.sendMessage(`Thread ID: ${data[i].threadID}\nThread Name: ${data[i].name}\nIs Group: ${data[i].isGroup}`, gc)
 										}
 									}
 								}
@@ -376,20 +310,6 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 										api.sendMessage("Thread ID: " + mm[i] + "\nThread Name: " + data.threadName, gc)
 									}
 								})
-							}
-						}else if(x.startsWith(prefix + "base64")){
-							let data = x.split(" ")
-							data.shift()
-							if(data[0] == "encode"){
-								data.shift()
-								let txt = data.join(" ")
-								api.sendMessage(atob(txt), event.threadID, event.messageID)
-							}else if(data[0] == "decode"){
-								data.shift()
-								let txt = data.join(" ")
-								api.sendMessage(btoa(txt), event.threadID, event.messageID)
-							}else{
-								api.sendMessage("Invalid Command", event.threadID, event.messageID)
 							}
 						}else if(x.startsWith(prefix) && x.includes(separator)){
 							let m = mess.split(separator)
@@ -640,8 +560,8 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 										let z = y.join(" ")
 										console.log("911")
 										console.log(event.mentions.data)
-										if(!isNaN(z)){
-											api.getUserInfo(z, (err, data) => {
+										if(isNaN(z)){
+											api.getUserInfo(sp[0], (err, data) => {
 												if(err){
 													console.log(err)
 												}else{
@@ -1190,7 +1110,17 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 				let x = mess.toLowerCase()
 				let y = x.split(" ")
 				if(event.body != undefined){
-					if(!selves.includes(event.senderID) && vip.includes(event.messageReply.senderID) && (x.includes("salamat") || x.includes("thank") || x.includes("tnx"))){
+					if(x.startsWith(prefix) && (gc.includes(event.threadID) || vip.includes(event.senderID))){
+						let least = event.messageReply.body
+						let data = least.match(/^Thread\sID:\s([0-9]+)/)
+						if(x.startsWith(prefix + "say")){
+							let xpl = mess.split(" ")
+							xpl.shift()
+							api.sendMessage(xpl.join(" "), data[1])
+							let th = api.getTheadInfo(data[1]).threadName
+							api.sendMessage(`Message sent to ${th}`, event.threadID, event.messageID)
+						}
+					}else if(!selves.includes(event.senderID) && vip.includes(event.messageReply.senderID) && (x.includes("salamat") || x.includes("thank") || x.includes("tnx"))){
 						api.setMessageReaction("😻", event.messageID, (err) => {}, true)
 						api.getUserInfo(event.senderID, (err, data) => {
 							console.log(api.mention)
