@@ -561,32 +561,6 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 										console.log("911")
 										console.log(event.mentions.data)
 										if(isNaN(z)){
-											api.getUserInfo(sp[0], (err, data) => {
-												if(err){
-													console.log(err)
-												}else{
-													let name = data[z]
-													let info = "Name: " + name.name + "\n"
-													if(name.vanity != undefined){
-														info += "Username: " + name.vanity + "\n"
-													}
-													switch(name.gender){
-														case 1:
-															info += "Gender: Female"
-														break
-														case 2:
-															info += "Gender: Male"
-														break
-														default:
-															info += "Gender: Custom"
-													}
-													info += "\nProfile Url: " + name.profileUrl
-													api.sendMessage(info, event.threadID, event.messageID)
-												}
-											})/*
-										}else if(event.mentions.length > 0){
-											api.sendMessage("hi", gc)*/
-										}else{
 											api.getUserID(z, (err, data) => {
 												if(err){
 													console.log(err)
@@ -615,6 +589,34 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 															api.sendMessage(info, event.threadID, event.messageID)
 														}
 													})
+												}
+											})
+											
+											/*
+										}else if(event.mentions.length > 0){
+											api.sendMessage("hi", gc)*/
+										}else{
+											api.getUserInfo(sp[0], (err, data) => {
+												if(err){
+													console.log(err)
+												}else{
+													let name = data[z]
+													let info = "Name: " + name.name + "\n"
+													if(name.vanity != undefined){
+														info += "Username: " + name.vanity + "\n"
+													}
+													switch(name.gender){
+														case 1:
+															info += "Gender: Female"
+														break
+														case 2:
+															info += "Gender: Male"
+														break
+														default:
+															info += "Gender: Custom"
+													}
+													info += "\nProfile Url: " + name.profileUrl
+													api.sendMessage(info, event.threadID, event.messageID)
 												}
 											})
 										}
@@ -1138,6 +1140,9 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 											gender = "Custom"
 									}
 									let message = "Name: " + data[event.messageReply.senderID]['name'] + "\n"
+									if(name.vanity != undefined){
+										info += "Username: " + name.vanity + "\n"
+									}
 									message += "Gender: " + gender + "\n"
 									if(data[event.messageReply.senderID]['nickname'] != undefined){
 										message += data[event.messageReply.senderID]['nickname']
