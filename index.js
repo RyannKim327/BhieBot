@@ -1121,6 +1121,31 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 							api.getThreadInfo(data[1], (err, dat) => {
 								api.sendMessage(`Message sent to ${dat.threadName}`, event.threadID, event.messageID)
 							})
+						}else if(x.startsWith(prefix + "info") && !b_users.includes(event.senderID)){
+							api.getUserInfo(parseInt(event.messageReply.senderID),  (err, data) => {
+								if(err){
+									console.log(err)
+								}else{
+									let gender = ""
+									switch(data[event.messageReply.senderID]['gender']){
+										case 1:
+											gender = "Female"
+										break
+										case 2:
+											gender = "Male"
+										break
+										default:
+											gender = "Custom"
+									}
+									let message = "Name: " + data[event.messageReply.senderID]['name'] + "\n"
+									message += "Gender: " + gender + "\n"
+									if(data[event.messageReply.senderID]['nickname'] != undefined){
+										message += data[event.messageReply.senderID]['nickname']
+									}
+									message += "Profile Link: " + data[event.messageReply.senderID]['profileUrl']
+									api.sendMessage(message, event.threadID, event.messageID)
+								}
+							})
 						}
 					}else if(!selves.includes(event.senderID) && vip.includes(event.messageReply.senderID) && (x.includes("salamat") || x.includes("thank") || x.includes("tnx"))){
 						api.setMessageReaction("😻", event.messageID, (err) => {}, true)
@@ -1138,31 +1163,6 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 								body: "Kawawa naman",
 								attachment: fs.createReadStream(__dirname + "/edamage.jpg")
 						}, event.threadID, event.messageReply.messageID)
-					}else if(x.startsWith(prefix + "info") && !b_users.includes(event.senderID)){
-						api.getUserInfo(parseInt(event.messageReply.senderID),  (err, data) => {
-							if(err){
-								console.log(err)
-							}else{
-								let gender = ""
-								switch(data[event.messageReply.senderID]['gender']){
-									case 1:
-										gender = "Female"
-									break
-									case 2:
-										gender = "Male"
-									break
-									default:
-										gender = "Custom"
-								}
-								let message = "Name: " + data[event.messageReply.senderID]['name'] + "\n"
-								message += "Gender: " + gender + "\n"
-								if(data[event.messageReply.senderID]['nickname'] != undefined){
-									message += data[event.messageReply.senderID]['nickname']
-								}
-								message += "Profile Link: " + data[event.messageReply.senderID]['profileUrl']
-								api.sendMessage(message, event.threadID, event.messageID)
-							}
-						})
 					}else if(4699051006857054 != event.threadID && !selves.includes(event.senderID) && (x.includes("cute") || x.includes("kyot")) && !x.includes("execute")){
 						if(x.includes("april")){
 							api.sendMessage({
