@@ -1117,7 +1117,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 							let xpl = mess.split(" ")
 							xpl.shift()
 							api.sendMessage(xpl.join(" "), data[1])
-							let th = api.getTheadInfo(data[1]).threadName
+							let th = api.getThreadInfo(data[1]).threadName
 							api.sendMessage(`Message sent to ${th}`, event.threadID, event.messageID)
 						}
 					}else if(!selves.includes(event.senderID) && vip.includes(event.messageReply.senderID) && (x.includes("salamat") || x.includes("thank") || x.includes("tnx"))){
