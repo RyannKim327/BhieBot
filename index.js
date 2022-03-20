@@ -295,7 +295,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 								}else{
 									for(let i = 0; i < data.length; i++){
 										if(!vip.includes(data[i].threadID) && !gc.includes(data[i].threadID)){
-											api.sendMessage(`Thread ID: ${data[i].threadID}\nThread Name: ${data[i].name}\nIs Group: ${data[i].isGroup}`, gc)
+											api.sendMessage(`Thread ID: ${data[i].threadID}\nThread Name: ${data[i].name}\nIs Group: ${data[i].isGroup}`, event.threadID)
 										}
 									}
 								}
@@ -307,7 +307,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 									if(err){
 										console.log(err)
 									}else{
-										api.sendMessage("Thread ID: " + mm[i] + "\nThread Name: " + data.threadName, gc)
+										api.sendMessage("Thread ID: " + mm[i] + "\nThread Name: " + data.threadName, event.threadID)
 									}
 								})
 							}
@@ -983,7 +983,8 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 					}
 					if(!x.startsWith(prefix)){
 						for(let z = 0; z < y.length; z++){
-							if(!selves.includes(event.senderID) && myDay >= 5 && myDay < 12 && !morning.includes(event.senderID) && (y[z].includes("morning") || y[z].includes("umaga")) && y.length <= 8){
+							let greet = y[z].replace(/[^\w\s]/gi, '')
+							if(!selves.includes(event.senderID) && myDay >= 5 && myDay < 12 && !morning.includes(event.senderID) && (greet.includes("morning") || greet.includes("umaga")) && y.length <= 8){
 								api.getUserInfo(event.senderID, (err, data) => {
 									if(err){
 										console.log(err)
@@ -1037,7 +1038,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 										}
 									}
 								})
-							}else if(!selves.includes(event.senderID) && myDay >= 12 && myDay < 18 && !aftie.includes(event.senderID) && (y[z].includes("afternoon") || y[z].includes("aftie") || y[z].includes("hapon"))){
+							}else if(!selves.includes(event.senderID) && myDay >= 12 && myDay < 18 && !aftie.includes(event.senderID) && (greet.includes("afternoon") || greet.includes("aftie") || greet.includes("hapon"))){
 								api.getUserInfo(event.senderID, (err, data) => {
 									if(err){
 										console.log(err)
@@ -1065,7 +1066,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 										}
 									}
 								})
-							}else if(!selves.includes(event.senderID) && myDay >= 18 && myDay < 22 && !eve.includes(event.senderID) && (y[z] == "eve" || y[z].includes("gabi") || y[z].includes("evening"))){
+							}else if(!selves.includes(event.senderID) && myDay >= 18 && myDay < 22 && !eve.includes(event.senderID) && (greet == "eve" || greet.includes("gabi") || greet.includes("evening"))){
 								api.setMessageReaction("💗", event.messageID, (err) => {}, true)
 								api.getUserInfo(event.senderID, (err, data) => {
 									if(err){
@@ -1082,7 +1083,7 @@ login({appState: JSON.parse(process.env['state'])}, (err, api) => {
 										}, event.threadID, event.messageID)
 									}
 								})
-							}else if(!selves.includes(event.senderID) && (myDay >= 22 || myDay < 5) && (y[z].includes("night") && !night.includes(event.senderID) && y.length <= 8)){
+							}else if(!selves.includes(event.senderID) && (myDay >= 22 || myDay < 5) && (greet.includes("night") && !night.includes(event.senderID) && y.length <= 8)){
 								api.setMessageReaction("😴", event.messageID, (err) => {}, true)
 								api.getUserInfo(event.senderID, (err, data) => {
 									if(err){
