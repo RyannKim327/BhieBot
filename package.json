@@ -1,0 +1,17 @@
+{
+  "name": "bot",
+  "version": "0.0.2",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "RyannKim327",
+  "license": "ISC",
+  "dependencies": {
+    "@xaviabot/fca-unofficial": "^1.4.0",
+    "fs": "^0.0.1-security",
+    "mirai-fca-unofficial": "github:bhhoang/mirai-fca-unofficial"
+  }
+}
