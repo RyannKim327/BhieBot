@@ -1,5 +1,4 @@
 const fca = require("@xaviabot/fca-unofficial");
-const fs = require("fs");
 
 // INFO: Middlware Imports
 const command_middleware = require("./middlewares/command");
@@ -12,6 +11,7 @@ class core {
     this.__objs = {};
     this.__adminId = [];
   }
+
   setOptions(opts) {
     if (Object.keys(opts).length <= 0) {
       opts = {
@@ -22,6 +22,16 @@ class core {
     this.__opts = opts;
   }
 
+  addAdmin(id) {
+    if (Array.isArray(id)) {
+      id.forEach((v, i) => {
+        this.__adminId.push(v);
+      });
+      return;
+    }
+    this.__adminId.push(id);
+  }
+
   addAdminCommand(command) {
     /*
      * TODO: To create a compilation of all admin commands.
@@ -30,6 +40,9 @@ class core {
      * regular expression that will follow the format of the
      * command.
      */
+    if (typeof command === "string") {
+      command = JSON.parse(command);
+    }
     if (Array.isArray(command)) {
       command.forEach((v, i) => {
         this.__admin.push(v);
@@ -52,6 +65,9 @@ class core {
      * can be shown, as well as the name description and the
      * regular expression that will follow the format of the command.
      */
+    if (typeof command === "string") {
+      command = JSON.parse(command);
+    }
     if (Array.isArray()) {
       command.forEach((v, i) => {
         this.__commands.push(v);
@@ -102,8 +118,18 @@ class core {
            */
 
           let c = 0;
+          let _admin = true;
           const _command = () => {
-            const a = require(`./users/${this.__commands[c].source}`);
+            let script = "users";
+            if (this.__adminId.includes(event.senderID) && _admin) {
+              _command = "admin";
+              if (c >= this.__admin.length) {
+                c = 0;
+                script = "users";
+                _admin = false;
+              }
+            }
+            const a = require(`./${script}/${this.__commands[c].script}`);
             const b = command_middleware(a);
             if (!b(api, event, this.__commands[c])) {
               c++;
