@@ -1,6 +1,9 @@
 const fca = require("@xaviabot/fca-unofficial");
 const fs = require("fs");
 
+// INFO: Middlware Imports
+const command_middleware = require("./middlewares/command");
+
 class core {
   constructor() {
     console.log("Welcome to facebook bot.");
@@ -92,11 +95,22 @@ class core {
           return;
         }
 
-        if ((event, body)) {
+        if (event.body) {
           /*
            * NOTE: The purpose of this funciton is to check if there's a message existed
            * or new message arrived. It is to prevent the spamming caused by the account.
            */
+
+          let c = 0;
+          const _command = () => {
+            const a = require(`./users/${this.__commands[c].source}`);
+            const b = command_middleware(a);
+            if (!b(api, event, this.__commands[c])) {
+              c++;
+              _command();
+            }
+          };
+          _command();
         }
       });
     });
