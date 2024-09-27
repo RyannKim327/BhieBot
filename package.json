@@ -1,17 +1,29 @@
 {
-  "name": "bot",
-  "version": "0.0.2",
-  "description": "",
-  "main": "index.js",
+  "name": "bot-web",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
-  "keywords": [],
-  "author": "RyannKim327",
-  "license": "ISC",
   "dependencies": {
-    "@xaviabot/fca-unofficial": "^1.4.0",
-    "fs": "^0.0.1-security",
-    "mirai-fca-unofficial": "github:bhhoang/mirai-fca-unofficial"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.9.0",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "eslint": "^9.9.0",
+    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
+    "eslint-plugin-react-refresh": "^0.4.9",
+    "globals": "^15.9.0",
+    "typescript": "^5.5.3",
+    "typescript-eslint": "^8.0.1",
+    "vite": "^5.4.1"
   }
 }
