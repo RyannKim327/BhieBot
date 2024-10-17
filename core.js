@@ -1,4 +1,4 @@
-const fca = require("@xaviabot/fca-unofficial");
+const fca = require("fca-unofficial");
 
 // INFO: Middlware Imports
 const command_middleware = require("./middlewares/command");
@@ -93,53 +93,57 @@ class core {
      * or what we call the cookie to logged in to the server.
      */
 
-    const logout = fca(state, (error, api) => {
-      if (error) return console.error(`ERR [Login]: ${error.message}`);
+    try {
+      const logout = fca(state, async (error, api) => {
+        if (error) return console.error(`ERR [Login]: ${error.message}`);
 
-      api.setOptions(this.__opts);
+        api.setOptions(this.__opts);
 
-      if (!this.__commands) {
-        console.error(`ERR [Comamnds]: No comamnds existed`);
-        logout.logout();
-        return;
-      }
-
-      api.listenMqtt(async (error, event) => {
-        if (error) {
-          console.error(`ERR: [Listener]: ${error.message}`);
+        if (!this.__commands) {
+          console.error(`ERR [Comamnds]: No comamnds existed`);
           logout.logout();
           return;
         }
 
-        if (event.body) {
-          /*
-           * NOTE: The purpose of this funciton is to check if there's a message existed
-           * or new message arrived. It is to prevent the spamming caused by the account.
-           */
+        api.sendMessage("Test mode", "61560057928370");
 
-          let c = 0;
-          let _admin = true;
-          const _command = () => {
-            let script = "users";
-            if (this.__adminId.includes(event.senderID) && _admin) {
-              _command = "admin";
-              if (c >= this.__admin.length) {
-                c = 0;
-                script = "users";
-                _admin = false;
+        api.listenMqtt(async (error, event) => {
+          if (error) {
+            console.error(`ERR: [Listener]: ${error.message}`);
+            logout.logout();
+            return;
+          }
+
+          if (event.body) {
+            /*
+             * NOTE: The purpose of this funciton is to check if there's a message existed
+             * or new message arrived. It is to prevent the spamming caused by the account.
+             */
+
+            let c = 0;
+            let _admin = true;
+            const _command = () => {
+              let script = "users";
+              if (this.__adminId.includes(event.senderID) && _admin) {
+                _command = "admin";
+                if (c >= this.__admin.length) {
+                  c = 0;
+                  script = "users";
+                  _admin = false;
+                }
               }
-            }
-            const a = require(`./${script}/${this.__commands[c].script}`);
-            const b = command_middleware(a);
-            if (!b(api, event, this.__commands[c])) {
-              c++;
-              _command();
-            }
-          };
-          _command();
-        }
+              const a = require(`./${script}/${this.__commands[c].script}`);
+              const b = command_middleware(a);
+              if (!b(api, event, this.__commands[c])) {
+                c++;
+                _command();
+              }
+            };
+            _command();
+          }
+        });
       });
-    });
+    } catch (e) { }
   }
 }
 
