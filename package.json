@@ -10,9 +10,6 @@
   "author": "RyannKim327",
   "license": "ISC",
   "dependencies": {
-    "@xaviabot/fca-unofficial": "^1.4.0",
-    "fca-unofficial": "github:fca-unofficial/fca-unofficial",
-    "fs": "^0.0.1-security",
-    "mirai-fca-unofficial": "github:bhhoang/mirai-fca-unofficial"
+    "fs": "^0.0.1-security"
   }
 }
