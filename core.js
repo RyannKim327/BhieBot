@@ -15,7 +15,7 @@ class core {
     this.__prefix = "/";
     const directory = `${__dirname}/temp`;
     if (fs.existsSync(directory)) {
-      fs.rm(directory, { recursive: true }, (e) => {});
+      fs.rm(directory, { recursive: true }, (e) => { });
     }
     setTimeout(() => {
       fs.mkdirSync(directory);
@@ -125,8 +125,6 @@ class core {
         // api.sendMessage("Test mode", "61560057928370");
 
         console.log("Initiating Listener");
-        console.log(this.__commands);
-        console.log(this.__admin);
         api.listenMqtt(async (error, event) => {
           if (error) {
             console.error(`ERR: [Listener]: ${error.message}`);
@@ -147,7 +145,6 @@ class core {
               if (this.__admin.length > 0) {
                 let c = 0;
                 const admin_command = () => {
-                  console.log(`ADMIN: ${this.__admin[c]}`);
                   const a = require(`./admin/${this.__admin[c].script}`);
                   const b = command_middleware(a);
                   if (!b(api, event, this.__admin[c])) {
@@ -170,7 +167,7 @@ class core {
                 return api.sendMessage(
                   "There's no registed command here",
                   event.threadID,
-                  (e, m) => {},
+                  (e, m) => { },
                 );
               }
               let c = 0;
@@ -192,11 +189,15 @@ class core {
               if (!executed) {
                 _command();
               }
+              if (!executed) {
+                const ai = require("./auto/ai");
+                ai(api, event);
+              }
             }
           }
         });
       });
-    } catch (e) {}
+    } catch (e) { }
   }
 }
 

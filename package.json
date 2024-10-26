@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "nodemon index.js --ignore temp/gpt.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -13,6 +13,7 @@
   "dependencies": {
     "chatbox-fca-remake": "^2.0.9",
     "fs": "^0.0.1-security",
+    "g4f": "^1.4.6",
     "nodemon": "^3.1.7",
     "youtubei.js": "^10.5.0"
   }
