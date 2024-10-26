@@ -48,11 +48,11 @@ module.exports = async (api, event, regex) => {
           }
 
           details = details.contents[0];
-          const name = `${__dirname}/../temp/${details.title} - ${details.authors[0].name} - ${event.senderID}.mp3`;
+          const name = `${__dirname}/../temp/${details.title} - ${details.authors ? details.authors[0].name : ""} - ${event.senderID}.mp3`;
           const file = fs.createWriteStream(name);
 
           api.editMessage(
-            `Found [INFO]: ${details.title} - ${details.authors[0].name}`,
+            `Found [INFO]: ${details.title} - ${details.authors ? details.authors[0].name : ""}`,
             msg.messageID,
           );
 
@@ -73,7 +73,7 @@ module.exports = async (api, event, regex) => {
                 if (fs.existsSync(name)) {
                   fs.unlink(name, (err) => {});
                   api.editMessage(
-                    `Found [SUCCESS]: ${details.title} - ${details.authors[0].name}`,
+                    `Found [SUCCESS]: ${details.title} - ${details.authors ? details.authors[0].name : ""}`,
                     msg.messageID,
                   );
                 }
