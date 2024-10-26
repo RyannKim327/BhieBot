@@ -1,16 +1,25 @@
 const fca = require("chatbox-fca-remake");
+const fs = require("fs");
 
 // INFO: Middlware Imports
 const command_middleware = require("./middlewares/command");
 
 class core {
   constructor() {
-    console.log("Welcome to facebook bot.");
+    console.log("Core was initiated");
+
     this.__admin = [];
     this.__commands = [];
-    this.__objs = {};
+    this.__objs = { listenEvents: true };
     this.__adminId = [];
     this.__prefix = "/";
+    const directory = `${__dirname}/temp`;
+    if (fs.existsSync(directory)) {
+      fs.rm(directory, { recursive: true }, (e) => {});
+    }
+    setTimeout(() => {
+      fs.mkdirSync(directory);
+    }, 1000);
   }
 
   setOptions(opts) {
@@ -22,13 +31,14 @@ class core {
     }
     this.__opts = opts;
   }
+
   setPrefix(pref) {
     this.__prefix = pref;
   }
 
   addAdmin(id) {
     if (Array.isArray(id)) {
-      id.forEach((v, i) => {
+      id.forEach((v) => {
         this.__adminId.push(v);
       });
       return;
@@ -48,7 +58,7 @@ class core {
       command = JSON.parse(command);
     }
     if (Array.isArray(command)) {
-      command.forEach((v, i) => {
+      command.forEach((v) => {
         this.__admin.push(v);
       });
       return console.log(
@@ -73,7 +83,7 @@ class core {
       command = JSON.parse(command);
     }
     if (Array.isArray()) {
-      command.forEach((v, i) => {
+      command.forEach((v) => {
         this.__commands.push(v);
       });
       return console.log(
@@ -97,9 +107,12 @@ class core {
      * or what we call the cookie to logged in to the server.
      */
 
+    console.log("Welcome to BhieBot console side");
     try {
       const logout = fca(state, async (error, api) => {
         if (error) return console.error(`ERR [Login]: ${error.message}`);
+
+        console.log("Initiating settings");
 
         api.setOptions(this.__opts);
 
@@ -109,12 +122,15 @@ class core {
           return;
         }
 
-        api.sendMessage("Test mode", "61560057928370");
+        // api.sendMessage("Test mode", "61560057928370");
 
+        console.log("Initiating Listener");
+        console.log(this.__commands);
+        console.log(this.__admin);
         api.listenMqtt(async (error, event) => {
           if (error) {
             console.error(`ERR: [Listener]: ${error.message}`);
-            logout.logout();
+            // logout.logout();
             return;
           }
 
@@ -124,27 +140,58 @@ class core {
              * or new message arrived. It is to prevent the spamming caused by the account.
              */
 
+            let executed = false;
+
             if (event.body.startsWith(this.__prefix)) {
-              let c = 0;
-              let _admin = true;
-              const _command = () => {
-                let script = "users";
-                if (this.__adminId.includes(event.senderID) && _admin) {
-                  _command = "admin";
-                  if (c >= this.__admin.length) {
-                    c = 0;
-                    script = "users";
-                    _admin = false;
+              event.body = event.body.substring(1);
+              if (this.__admin.length > 0) {
+                let c = 0;
+                const admin_command = () => {
+                  console.log(`ADMIN: ${this.__admin[c]}`);
+                  const a = require(`./admin/${this.__admin[c].script}`);
+                  const b = command_middleware(a);
+                  if (!b(api, event, this.__admin[c])) {
+                    if (c < this.__admin.length - 1) {
+                      c++;
+
+                      if (!executed) {
+                        admin_command();
+                      }
+                    }
+                  } else {
+                    executed = true;
                   }
+                };
+                if (!executed) {
+                  admin_command();
                 }
-                const a = require(`./${script}/${this.__commands[c].script}`);
+              }
+              if (this.__commands.length <= 0 && !executed) {
+                return api.sendMessage(
+                  "There's no registed command here",
+                  event.threadID,
+                  (e, m) => {},
+                );
+              }
+              let c = 0;
+              const _command = () => {
+                const a = require(`./users/${this.__commands[c].script}`);
                 const b = command_middleware(a);
                 if (!b(api, event, this.__commands[c])) {
-                  c++;
-                  _command();
+                  if (c < this.__commands.length - 1) {
+                    c++;
+
+                    if (!executed) {
+                      _command();
+                    }
+                  }
+                } else {
+                  executed = true;
                 }
               };
-              _command();
+              if (!executed) {
+                _command();
+              }
             }
           }
         });

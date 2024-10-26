@@ -8,14 +8,24 @@ bot.setOptions({
   selfListen: true,
 });
 
-bot.addAdmin("6156005792837061560057928370");
+bot.addAdmin("61560057928370");
 
 bot.addAdminCommand({
   name: "Sample Command",
-  command: ["admin test command"],
+  format: "test",
   script: "test",
+  type: ["message"],
+});
+
+bot.addCommand({
+  name: "Music Command",
+  format: "music ([\\w\\W]+)",
+  script: "music",
+  type: ["message"],
 });
 
 bot.start({
   appState: JSON.parse(fs.readFileSync("fbstate.json", "utf-8")),
 });
+
+module.exports = bot;
