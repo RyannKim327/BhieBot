@@ -10,6 +10,7 @@
   "author": "RyannKim327",
   "license": "ISC",
   "dependencies": {
+    "chatbox-fca-remake": "^2.0.9",
     "fs": "^0.0.1-security"
   }
 }

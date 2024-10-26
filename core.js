@@ -1,4 +1,4 @@
-const fca = require("fca-unofficial");
+const fca = require("chatbox-fca-remake");
 
 // INFO: Middlware Imports
 const command_middleware = require("./middlewares/command");
@@ -10,6 +10,7 @@ class core {
     this.__commands = [];
     this.__objs = {};
     this.__adminId = [];
+    this.__prefix = "/";
   }
 
   setOptions(opts) {
@@ -20,6 +21,9 @@ class core {
       };
     }
     this.__opts = opts;
+  }
+  setPrefix(pref) {
+    this.__prefix = pref;
   }
 
   addAdmin(id) {
@@ -101,7 +105,7 @@ class core {
 
         if (!this.__commands) {
           console.error(`ERR [Comamnds]: No comamnds existed`);
-          logout.logout();
+          // logout.logout();
           return;
         }
 
@@ -120,30 +124,32 @@ class core {
              * or new message arrived. It is to prevent the spamming caused by the account.
              */
 
-            let c = 0;
-            let _admin = true;
-            const _command = () => {
-              let script = "users";
-              if (this.__adminId.includes(event.senderID) && _admin) {
-                _command = "admin";
-                if (c >= this.__admin.length) {
-                  c = 0;
-                  script = "users";
-                  _admin = false;
+            if (event.body.startsWith(this.__prefix)) {
+              let c = 0;
+              let _admin = true;
+              const _command = () => {
+                let script = "users";
+                if (this.__adminId.includes(event.senderID) && _admin) {
+                  _command = "admin";
+                  if (c >= this.__admin.length) {
+                    c = 0;
+                    script = "users";
+                    _admin = false;
+                  }
                 }
-              }
-              const a = require(`./${script}/${this.__commands[c].script}`);
-              const b = command_middleware(a);
-              if (!b(api, event, this.__commands[c])) {
-                c++;
-                _command();
-              }
-            };
-            _command();
+                const a = require(`./${script}/${this.__commands[c].script}`);
+                const b = command_middleware(a);
+                if (!b(api, event, this.__commands[c])) {
+                  c++;
+                  _command();
+                }
+              };
+              _command();
+            }
           }
         });
       });
-    } catch (e) { }
+    } catch (e) {}
   }
 }
 
