@@ -7,9 +7,16 @@
     "start": "nodemon index.js --ignore temp/gpt.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "Facebook Account Bot",
+    "Facebook Chatbot",
+    "Facebook with GPT",
+    "Facebook Bot",
+    "Facebook Music Bot",
+    "BhieBot Reborn"
+  ],
   "author": "RyannKim327",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "biblegateway-scrape": "^0.0.7-beta",
     "chatbox-fca-remake": "^2.0.9",
