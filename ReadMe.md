@@ -38,6 +38,6 @@ the program, you need to terminate it first and run again the program.
 14. Jerson Carin
 15. Rovie Francisco
 16. lkpanio25
-18. VangBanLaNhat
-19. Schmavery
-20. badAimWeeb
+17. VangBanLaNhat
+18. Schmavery
+19. badAimWeeb

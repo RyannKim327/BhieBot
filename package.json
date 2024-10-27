@@ -16,7 +16,7 @@
     "BhieBot Reborn"
   ],
   "author": "RyannKim327",
-  "license": "MIT",
+  "license": "BSD-3-Clause",
   "dependencies": {
     "biblegateway-scrape": "^0.0.7-beta",
     "chatbox-fca-remake": "^2.0.9",

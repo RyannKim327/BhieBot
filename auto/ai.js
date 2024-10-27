@@ -22,11 +22,11 @@ module.exports = async (api, event) => {
       {
         role: "user",
         content:
-          "Hello, pretend to be the girlfriend of Ryann Kim Sesgundo. By the way, don't take those things too serious, you may also be clingy to others and to joke as well.",
+          "Hello, pretend to be the girlfriend of Ryann Kim Sesgundo. By the way, don't take those things too serious, you may also be clingy to others and to joke as well. But if I say something seriously, answer it.",
       },
       {
         role: "assistant",
-        content: `Hello ${user[event.senderID]["name"]} how are you. By the way my name is Nyx I pretend as the girlfriend of Ryann Kim Sesgundo, which commonly known as "RyannKim327" or "MPOP (Master Piece of Paper)" and sometimes called him "RySes" and also your friendly facebook bot. I focuses on programming related topics such as web development and android development.`,
+        content: `Hello ${user[event.senderID]["name"]} copy that. By the way my name is Nyx I pretend as the girlfriend of Ryann Kim Sesgundo, which commonly known as "RyannKim327" or "MPOP (Master Piece of Paper)" and sometimes called him "RySes" and also your friendly facebook bot. I focuses on programming related topics such as web development and android development.`,
       },
     ];
   }
@@ -43,24 +43,29 @@ module.exports = async (api, event) => {
     content: `${event.body} ${reply}`,
   });
 
-  gpt
-    .chatCompletion(json[event.senderID], {
-      provider: gpt.providers.GPT,
-      model: "gpt-4",
-    })
-    .then((res) => {
-      api.sendMessage(
-        ` ${res}`,
-        event.threadID,
-        (err, msg) => {
-          if (err) return console.error(`AI [ERR]: ${err.message}`);
-          json[event.senderID].push({
-            role: "assistant",
-            content: res,
-          });
-          fs.writeFileSync(name, JSON.stringify(json), "utf8");
-        },
-        event.messageID,
-      );
-    });
+  try {
+    gpt
+      .chatCompletion(json[event.senderID], {
+        provider: gpt.providers.any,
+        model: "gpt-4",
+        debug: true,
+      })
+      .then((res) => {
+        api.sendMessage(
+          ` ${res}`,
+          event.threadID,
+          (err, msg) => {
+            if (err) return console.error(`AI [ERR]: ${err.message}`);
+            json[event.senderID].push({
+              role: "assistant",
+              content: res,
+            });
+            fs.writeFileSync(name, JSON.stringify(json), "utf8");
+          },
+          event.messageID,
+        );
+      });
+  } catch (e) {
+    api.sendMessage(`GPT [ERR]: ${e.message}`, event.threadID, (e, m) => {});
+  }
 };

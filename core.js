@@ -154,8 +154,8 @@ class core {
                 // INFO: Admin commands
                 let c = 0;
                 const admin_command = () => {
-                  if (this.__admin[c].type === undefined) {
-                    this.__admin[c].type = "message";
+                  if (!this.__admin[c].type) {
+                    this.__admin[c].type = ["message"];
                   }
                   const a = require(`./admin/${this.__admin[c].script}`);
                   const b = command_middleware(a);
@@ -185,8 +185,8 @@ class core {
               let c = 0;
               const _command = () => {
                 // INFO: Normal user's commands
-                if (this.__commands[c].type === undefined) {
-                  this.__commands[c].type = "message";
+                if (!this.__commands[c].type) {
+                  this.__commands[c].type = ["message"];
                 }
                 const a = require(`./users/${this.__commands[c].script}`);
                 const b = command_middleware(a);

@@ -6,15 +6,15 @@ const bot = new core();
 bot.setOptions({
   listenEvents: true,
   selfListen: true,
+  logLevel: "silent",
 });
 
 bot.addAdmin("61560057928370");
 
 bot.addAdminCommand({
-  name: "Sample Command",
-  format: "test",
-  script: "test",
-  type: ["message"],
+  name: "Check Command",
+  format: "check",
+  script: "check",
 });
 
 bot.addCommand({
