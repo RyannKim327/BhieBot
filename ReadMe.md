@@ -30,7 +30,14 @@ the program, you need to terminate it first and run again the program.
 6. Jovanny De Leon
 7. Bundas Andrian
 8. Lester Navarra
-9. lkpanio25
-10. VangBanLaNhat
-11. Schmavery
-12. badAimWeeb
+9. Jay Patrick Cano
+10. Melvin Jones Gallano Repol
+11. Marvin Quillo Saik
+12. John Roy Lapida Calimlim
+13. Mart Antony Salazar
+14. Jerson Carin
+15. Rovie Francisco
+16. lkpanio25
+18. VangBanLaNhat
+19. Schmavery
+20. badAimWeeb

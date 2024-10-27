@@ -18,6 +18,13 @@ bot.addAdminCommand({
 });
 
 bot.addCommand({
+  name: "Bible Command",
+  format: "verse ([\\w\\W]+)",
+  script: "bible",
+  type: ["message"],
+});
+
+bot.addCommand({
   name: "Music Command",
   format: "music ([\\w\\W]+)",
   script: "music",

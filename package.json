@@ -11,6 +11,7 @@
   "author": "RyannKim327",
   "license": "ISC",
   "dependencies": {
+    "biblegateway-scrape": "^0.0.7-beta",
     "chatbox-fca-remake": "^2.0.9",
     "fs": "^0.0.1-security",
     "g4f": "^1.4.6",
