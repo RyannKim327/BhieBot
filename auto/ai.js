@@ -46,9 +46,12 @@ module.exports = async (api, event) => {
   try {
     gpt
       .chatCompletion(json[event.senderID], {
-        provider: gpt.providers.any,
-        model: "gpt-4",
-        debug: true,
+        provider: gpt.providers.ChatBase,
+        // model: "gpt-4",
+        debug: false,
+        output: (txt) => {
+          return txt;
+        },
       })
       .then((res) => {
         api.sendMessage(
@@ -64,8 +67,15 @@ module.exports = async (api, event) => {
           },
           event.messageID,
         );
+      })
+      .catch((e) => {
+        api.sendMessage(
+          `GPT [ERR]: ${e.message}`,
+          event.threadID,
+          (e, m) => { },
+        );
       });
   } catch (e) {
-    api.sendMessage(`GPT [ERR]: ${e.message}`, event.threadID, (e, m) => {});
+    api.sendMessage(`GPT [ERR]: ${e.message}`, event.threadID, (e, m) => { });
   }
 };
