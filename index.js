@@ -18,7 +18,14 @@ bot.addAdminCommand({
 });
 
 bot.addCommand({
+  name: "Help Command",
+  format: "help",
+  script: "help",
+});
+
+bot.addCommand({
   name: "Bible Command",
+  description: "A command where it can send bible verse requests",
   format: "verse ([\\w\\W]+)",
   script: "bible",
   type: ["message"],
@@ -26,6 +33,7 @@ bot.addCommand({
 
 bot.addCommand({
   name: "Music Command",
+  description: "A music bot command powered by Youtube platform.",
   format: "music ([\\w\\W]+)",
   script: "music",
   type: ["message"],

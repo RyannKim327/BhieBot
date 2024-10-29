@@ -99,6 +99,17 @@ class core {
     this.__commands.push(command);
   }
 
+  getAllCommands() {
+    // TODO: To create a function to fetch all the commands from admin
+    // and normal users.
+    return this.__commands;
+  }
+
+  getPrefix() {
+    // TODO: To create a function to get the prefix of the bot
+    return this.__prefix;
+  }
+
   start(state) {
     /*
      * NOTE: This state consists of JSON data of any of these information
@@ -112,7 +123,7 @@ class core {
     console.log("Welcome to BhieBot console side");
     try {
       fca(state, async (error, api) => {
-        if (error) return console.error(`ERR [Login]: ${error.message}`);
+        if (error) return console.error(`ERR [Login]: ${error.error}`);
 
         console.log("Initiating settings");
         api.setOptions(this.__opts);
@@ -131,7 +142,7 @@ class core {
             isListen = false;
           }
           if (error) {
-            return console.error(`ERR: [Listener]: ${error.message}`);
+            return console.error(`ERR: [Listener]: ${error.error}`);
           }
 
           if (event.body) {
