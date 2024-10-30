@@ -121,6 +121,10 @@ class core {
      */
 
     console.log("Welcome to BhieBot console side");
+    if (state.appState) {
+      if (!fs.existsSync(`${__dirname}/fbstate.json`))
+        return console.error(`Login [ERR]: fbstate.json not found.`);
+    }
     try {
       fca(state, async (error, api) => {
         if (error) return console.error(`ERR [Login]: ${error.error}`);
