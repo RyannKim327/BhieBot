@@ -120,11 +120,8 @@ class core {
      * or what we call the cookie to logged in to the server.
      */
 
-    console.log("Welcome to BhieBot console side");
-    if (state.appState) {
-      if (!fs.existsSync(`${__dirname}/fbstate.json`))
-        return console.error(`Login [ERR]: fbstate.json not found.`);
-    }
+    console.log("Welcome to BhieBot console side.");
+
     try {
       fca(state, async (error, api) => {
         if (error) return console.error(`ERR [Login]: ${error.error}`);
