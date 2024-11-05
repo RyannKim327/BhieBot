@@ -136,14 +136,16 @@ class core {
         let isListen = true;
         console.log("Initiating Listener");
 
-        api.listenMqtt(async (error, event) => {
+        api.listen(async (error, event) => {
           if (isListen) {
             // TODO: To execute the log once and avoid loops
             console.log("Listener is now executed.");
             isListen = false;
           }
           if (error) {
-            return console.error(`ERR: [Listener]: ${error.error}`);
+            console.error(`ERR: [Listener]: ${error.error}`);
+            // api.logout();
+            return;
           }
 
           if (event.body) {

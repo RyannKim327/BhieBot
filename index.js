@@ -6,7 +6,6 @@ const bot = new core();
 bot.setOptions({
   listenEvents: true,
   selfListen: true,
-  logLevel: "silent",
 });
 
 bot.addAdmin("61560057928370");
